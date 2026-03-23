@@ -35,11 +35,10 @@
   --iconPlay:"https://i.postimg.cc/ZB9yQkMt/p3play.png";
   --iconReplay:"https://i.postimg.cc/ft30P4rQ/p3replay.png";
 
-  --good:#b7f0c8;
-  --bad:#ffd5d5;
-  --soft:#ffffff;
+  --good:#b8efc8;
+  --bad:#ffd6d6;
   --line:#d7e8f7;
-  --slot:#eef7ff;
+  --soft:#ffffff;
 }
 
 *{
@@ -161,17 +160,17 @@ html,body{
   opacity:.85;
 }
 
-/* ===== CHAPTER CONTENT ===== */
-.topInfo{
+/* ===== GAME UI ===== */
+.topRow{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:12px;
+  gap:10px;
   flex-wrap:wrap;
-  margin-bottom:8px;
+  margin-bottom:10px;
 }
 
-.stepPill{
+.pill{
   background:#fff;
   border:3px solid var(--line);
   border-radius:999px;
@@ -180,71 +179,55 @@ html,body{
 }
 
 .instructions{
-  min-height:34px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
   text-align:center;
   font-size:clamp(1rem,2vw,1.2rem);
-  padding:4px 8px 10px;
+  min-height:28px;
+  margin-bottom:10px;
 }
 
 .feedback{
-  min-height:34px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
   text-align:center;
   font-size:clamp(1rem,2vw,1.2rem);
-  padding:4px 8px;
+  min-height:30px;
+  margin-bottom:12px;
 }
 
 .feedback.good{
-  color:#228048;
+  color:#1f7c42;
 }
 
 .feedback.bad{
-  color:#b23c3c;
+  color:#b53b3b;
 }
 
-.gameGrid{
-  display:grid;
-  gap:14px;
+.centerBox{
+  border:3px dashed var(--line);
+  border-radius:16px;
+  background:rgba(255,255,255,.55);
+  padding:14px;
+  text-align:center;
+  margin-bottom:14px;
+  font-size:clamp(1rem,2vw,1.15rem);
 }
 
 .choiceGrid{
+  display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
 }
 
-.choiceBtn,
-.quizBtn,
-.tileBtn,
-.slotBtn,
-.catBtn,
-.poolItem,
-.memoryCard{
+.choiceBtn{
   border:3px solid var(--line);
   border-radius:18px;
   background:var(--soft);
   box-shadow:var(--shadow);
+  padding:12px;
   cursor:pointer;
   font-family:'Schoulschrëft', Arial, sans-serif;
   color:var(--ink);
 }
 
-.choiceBtn,
-.quizBtn,
-.catBtn{
-  padding:12px;
-}
-
-.choiceBtn:active,
-.quizBtn:active,
-.tileBtn:active,
-.slotBtn:active,
-.catBtn:active,
-.poolItem:active,
-.memoryCard:active{
+.choiceBtn:active{
   transform:scale(.98);
 }
 
@@ -270,14 +253,6 @@ html,body{
   background:var(--bad)!important;
 }
 
-.centerBox{
-  border:3px dashed var(--line);
-  border-radius:18px;
-  background:rgba(255,255,255,.55);
-  padding:18px;
-  text-align:center;
-}
-
 .memoryGrid{
   display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
@@ -286,126 +261,46 @@ html,body{
 
 .memoryCard{
   min-height:120px;
-  padding:8px;
+  border:3px solid var(--line);
+  border-radius:18px;
+  background:var(--soft);
+  box-shadow:var(--shadow);
+  cursor:pointer;
   display:flex;
   align-items:center;
   justify-content:center;
   text-align:center;
-  overflow:hidden;
+  padding:8px;
+  font-family:'Schoulschrëft', Arial, sans-serif;
+  color:var(--ink);
+}
+
+.memoryCard:active{
+  transform:scale(.98);
 }
 
 .memoryCard img{
   width:100%;
   max-width:110px;
-  max-height:90px;
+  max-height:85px;
   object-fit:contain;
 }
 
-.memoryCard .back{
+.memoryBack{
   font-size:2rem;
 }
 
-.memoryCard.matched{
-  background:var(--good);
-}
-
-.sentenceSlots,
-.tokenPool{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  justify-content:center;
-}
-
-.slotBtn{
-  min-width:110px;
-  min-height:56px;
-  padding:10px 14px;
-  background:var(--slot);
-  font-size:clamp(1rem,2vw,1.15rem);
-}
-
-.tileBtn,
-.poolItem{
-  padding:10px 14px;
-  font-size:clamp(1rem,2vw,1.15rem);
-}
-
-.quizImage{
-  display:block;
-  margin:0 auto 12px auto;
-  width:min(100%,260px);
-  max-height:180px;
-  object-fit:contain;
-}
-
-.quizOptions{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
-}
-
-.sortWrap{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:14px;
-}
-
-.poolWrap{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  justify-content:center;
-}
-
-.columns{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:14px;
-}
-
-.column{
+.doneBox{
   border:3px dashed var(--line);
-  border-radius:18px;
-  padding:12px;
+  border-radius:16px;
   background:rgba(255,255,255,.55);
-  min-height:170px;
-}
-
-.columnTitle{
+  padding:24px 16px;
   text-align:center;
-  margin:0 0 10px 0;
-  font-size:clamp(1.05rem,2vw,1.25rem);
-}
-
-.columnItems{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  justify-content:center;
-}
-
-.poolItem img{
-  width:70px;
-  height:60px;
-  object-fit:contain;
-  display:block;
-  margin:0 auto 6px auto;
-}
-
-.endBox{
-  border:3px dashed var(--line);
-  border-radius:18px;
-  background:rgba(255,255,255,.55);
-  padding:24px 18px;
-  text-align:center;
-  font-size:clamp(1.1rem,2.4vw,1.4rem);
+  font-size:clamp(1.1rem,2.4vw,1.35rem);
 }
 
 @media (max-width:760px){
-  .choiceGrid,
-  .quizOptions,
-  .columns{
+  .choiceGrid{
     grid-template-columns:1fr;
   }
 
@@ -429,7 +324,7 @@ html,body{
     <img src="https://i.postimg.cc/QBYTSN08/p3arrow.png" alt="">
   </button>
 
-  <h1 class="barTitle" id="gameTitle">P3 – Bauerenhaff</h1>
+  <h1 class="barTitle" id="gameTitle">P3 – Lauschter a klick</h1>
 
   <div class="barRight">
     <button class="barBtn" id="play" aria-label="Play">
@@ -446,14 +341,13 @@ html,body{
 
 <div class="wrap">
   <div class="card">
-    <div class="topInfo">
+    <div class="topRow">
       <p class="cardTitle" id="cardTitle">Spill 1</p>
-      <div class="stepPill" id="stepPill">1 / 5</div>
+      <div class="pill" id="gameCount">1 / 2</div>
     </div>
 
     <div class="instructions" id="instructions"></div>
     <div class="feedback" id="feedback"></div>
-
     <div id="gameArea"></div>
   </div>
 </div>
@@ -462,166 +356,130 @@ html,body{
 const AUDIO_BASE = 'https://github.com/albrechtclaire1007/p3bauerenhaff/raw/refs/heads/main/';
 
 const ITEMS = [
-  { id:'bauer', word:'de Bauer', img:'https://i.postimg.cc/Z0dNtv6g/bauer.png', audio:'BAUER.mp3', cat:'persoun' },
-  { id:'gees', word:'d’Gees', img:'https://i.postimg.cc/PC7Nc6pp/gees.png', audio:'GEESS.mp3', cat:'déier' },
-  { id:'fierkel', word:'d’Fierkel', img:'https://i.postimg.cc/FdjhGvJw/fiekel.png', audio:'FIERKEL.mp3', cat:'déier' },
-  { id:'fillen', word:'de Fillen', img:'https://i.postimg.cc/5YwfpJCW/fillen.png', audio:'FILLEN.mp3', cat:'déier' },
-  { id:'hong', word:'den Hong', img:'https://i.postimg.cc/R3nqzcwC/hong.png', audio:'HONG.mp3', cat:'déier' },
-  { id:'iesel', word:'den Iesel', img:'https://i.postimg.cc/R3nqzcwx/iesel.png', audio:'IESEL.mp3', cat:'déier' },
-  { id:'int', word:'d’Int', img:'https://i.postimg.cc/8FrsVhLP/int.png', audio:'INT.mp3', cat:'déier' },
-  { id:'jippelchen', word:'d’Jippelchen', img:'https://i.postimg.cc/phbrVpBN/jippelchen.png', audio:'JIPPELCHEN.mp3', cat:'déier' },
-  { id:'kallef', word:'d’Kallef', img:'https://i.postimg.cc/R65hCNTZ/kallef.png', audio:'KALLEF.mp3', cat:'déier' },
-  { id:'kou', word:'d’Kou', img:'https://i.postimg.cc/Fd5zF7xR/kou.png', audio:'KOU.mp3', cat:'déier' },
-  { id:'lammchen', word:'d’Lämmchen', img:'https://i.postimg.cc/zbZvDVkR/lammchen.png', audio:'LAMMCHEN.mp3', cat:'bébé' },
-  { id:'paerd', word:'d’Päerd', img:'https://i.postimg.cc/R67FW4Ps/paerd.png', audio:'PAERD.mp3', cat:'déier' },
-  { id:'schof', word:'d’Schof', img:'https://i.postimg.cc/jwH5Dt89/schof.png', audio:'SCHOF.mp3', cat:'déier' }
+  { id:'bauer', word:'de Bauer', img:'https://i.postimg.cc/Z0dNtv6g/bauer.png', audio:'BAUER.mp3' },
+  { id:'gees', word:'d’Gees', img:'https://i.postimg.cc/PC7Nc6pp/gees.png', audio:'GEESS.mp3' },
+  { id:'fierkel', word:'d’Fierkel', img:'https://i.postimg.cc/FdjhGvJw/fiekel.png', audio:'FIERKEL.mp3' },
+  { id:'fillen', word:'de Fillen', img:'https://i.postimg.cc/5YwfpJCW/fillen.png', audio:'FILLEN.mp3' },
+  { id:'hong', word:'den Hong', img:'https://i.postimg.cc/R3nqzcwC/hong.png', audio:'HONG.mp3' },
+  { id:'iesel', word:'den Iesel', img:'https://i.postimg.cc/R3nqzcwx/iesel.png', audio:'IESEL.mp3' },
+  { id:'int', word:'d’Int', img:'https://i.postimg.cc/8FrsVhLP/int.png', audio:'INT.mp3' },
+  { id:'jippelchen', word:'d’Jippelchen', img:'https://i.postimg.cc/phbrVpBN/jippelchen.png', audio:'JIPPELCHEN.mp3' },
+  { id:'kallef', word:'d’Kallef', img:'https://i.postimg.cc/R65hCNTZ/kallef.png', audio:'KALLEF.mp3' },
+  { id:'kou', word:'d’Kou', img:'https://i.postimg.cc/Fd5zF7xR/kou.png', audio:'KOU.mp3' },
+  { id:'lammchen', word:'d’Lämmchen', img:'https://i.postimg.cc/zbZvDVkR/lammchen.png', audio:'LAMMCHEN.mp3' },
+  { id:'paerd', word:'d’Päerd', img:'https://i.postimg.cc/R67FW4Ps/paerd.png', audio:'PAERD.mp3' },
+  { id:'schof', word:'d’Schof', img:'https://i.postimg.cc/jwH5Dt89/schof.png', audio:'SCHOF.mp3' }
 ];
 
 const GAME_TITLES = [
   'P3 – Lauschter a klick',
-  'P3 – Memory',
-  'P3 – Saz bauen',
-  'P3 – Quiz',
-  'P3 – Sortéieren'
+  'P3 – Memory'
 ];
 
-const BUILD_SENTENCES = [
-  ['De','Bauer','huet','eng','Kou','.'],
-  ['D’','Int','schwëmmt','.'],
-  ['D’','Päerd','leeft','.'],
-  ['Den','Hong','ass','um','Haff','.'],
-  ['D’','Gees','ass','um','Haff','.']
+const memoryBaseItems = [
+  ITEMS.find(x => x.id === 'bauer'),
+  ITEMS.find(x => x.id === 'kou'),
+  ITEMS.find(x => x.id === 'hong'),
+  ITEMS.find(x => x.id === 'int'),
+  ITEMS.find(x => x.id === 'paerd'),
+  ITEMS.find(x => x.id === 'schof')
 ];
 
-const QUIZ_QUESTIONS = [
-  {
-    prompt:'Wat ass dat?',
-    img:'https://i.postimg.cc/Fd5zF7xR/kou.png',
-    audio:'KOU.mp3',
-    options:['d’Kou','den Hong','d’Int','d’Gees'],
-    correctIndex:0
-  },
-  {
-    prompt:'Wat ass dat?',
-    img:'https://i.postimg.cc/R3nqzcwx/iesel.png',
-    audio:'IESEL.mp3',
-    options:['d’Päerd','den Iesel','d’Kallef','de Bauer'],
-    correctIndex:1
-  },
-  {
-    prompt:'Wat ass dat?',
-    img:'https://i.postimg.cc/FdjhGvJw/fiekel.png',
-    audio:'FIERKEL.mp3',
-    options:['d’Schof','d’Fierkel','d’Int','d’Kou'],
-    correctIndex:1
-  },
-  {
-    prompt:'Wat ass dat?',
-    img:'https://i.postimg.cc/phbrVpBN/jippelchen.png',
-    audio:'JIPPELCHEN.mp3',
-    options:['d’Lämmchen','d’Jippelchen','d’Gees','den Hong'],
-    correctIndex:1
-  },
-  {
-    prompt:'Wien ass dat?',
-    img:'https://i.postimg.cc/Z0dNtv6g/bauer.png',
-    audio:'BAUER.mp3',
-    options:['de Bauer','den Iesel','de Fillen','d’Kallef'],
-    correctIndex:0
-  }
-];
-
-const SORT_CATEGORIES = [
-  { id:'persoun', label:'Persoun' },
-  { id:'déier', label:'Déieren' },
-  { id:'bébé', label:'Bébé-Déieren' }
-];
-
-let currentGame = 0;
-let currentAudio = null;
-let locked = false;
-
-let listenState = {};
-let memoryState = {};
-let sentenceState = {};
-let quizState = {};
-let sortState = {};
-
+const gameTitle = document.getElementById('gameTitle');
 const cardTitle = document.getElementById('cardTitle');
-const stepPill = document.getElementById('stepPill');
+const gameCount = document.getElementById('gameCount');
 const instructions = document.getElementById('instructions');
 const feedback = document.getElementById('feedback');
 const gameArea = document.getElementById('gameArea');
-const gameTitle = document.getElementById('gameTitle');
 const prevBtn = document.getElementById('prev');
 const nextBtn = document.getElementById('next');
 const playBtn = document.getElementById('play');
-const replayBtn = document.getElementById('replay');
+
+let currentGame = 0;
+let audio = null;
+
+/* ===== GAME 1 STATE ===== */
+let listenOrder = [];
+let listenIndex = 0;
+let listenLocked = false;
+
+/* ===== GAME 2 STATE ===== */
+let memoryCards = [];
+let memoryFirst = null;
+let memorySecond = null;
+let memoryLocked = false;
+let memoryMatches = 0;
 
 function shuffle(arr){
-  const copy = [...arr];
-  for(let i = copy.length - 1; i > 0; i--){
+  const a = [...arr];
+  for(let i = a.length - 1; i > 0; i--){
     const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
+    [a[i], a[j]] = [a[j], a[i]];
   }
-  return copy;
+  return a;
 }
 
-function setFeedback(text = '', cls = ''){
-  feedback.textContent = text;
+function setFeedback(text, cls){
+  feedback.textContent = text || '';
   feedback.className = 'feedback' + (cls ? ' ' + cls : '');
 }
 
 function stopAudio(){
-  if(currentAudio){
-    currentAudio.pause();
-    currentAudio.currentTime = 0;
+  if(audio){
+    audio.pause();
+    audio.currentTime = 0;
   }
 }
 
 function playAudio(file){
   stopAudio();
-  currentAudio = new Audio(AUDIO_BASE + file);
-  currentAudio.play().catch(()=>{});
+  audio = new Audio(AUDIO_BASE + file);
+  audio.play().catch(()=>{});
 }
 
 function updateTopBar(){
   gameTitle.textContent = GAME_TITLES[currentGame];
   cardTitle.textContent = 'Spill ' + (currentGame + 1);
-  stepPill.textContent = (currentGame + 1) + ' / ' + GAME_TITLES.length;
+  gameCount.textContent = (currentGame + 1) + ' / ' + GAME_TITLES.length;
   prevBtn.style.opacity = currentGame === 0 ? '.45' : '1';
   nextBtn.style.opacity = currentGame === GAME_TITLES.length - 1 ? '.45' : '1';
-  playBtn.style.opacity = currentGame === 1 || currentGame === 2 || currentGame === 4 ? '.45' : '1';
+  playBtn.style.opacity = currentGame === 0 ? '1' : '.45';
 }
 
+/* ===== GAME 1 ===== */
 function initListenGame(){
-  listenState = {
-    order:shuffle(ITEMS),
-    index:0
-  };
+  listenOrder = shuffle(ITEMS);
+  listenIndex = 0;
+  listenLocked = false;
+}
+
+function currentListenItem(){
+  return listenOrder[listenIndex];
 }
 
 function renderListenGame(){
-  if(!listenState.order || !listenState.order.length){
-    initListenGame();
+  const item = currentListenItem();
+
+  if(!item){
+    instructions.textContent = 'Bravo!';
+    setFeedback('Fäerdeg!', 'good');
+    gameArea.innerHTML = '<div class="doneBox">Du hues Spill 1 fäerdeg. Klick op de Pfeil no riets fir Spill 2.</div>';
+    return;
   }
 
-  const item = listenState.order[listenState.index];
-
   instructions.textContent = 'Lauschter a klick op dat richtegt Bild.';
-  setFeedback('');
-  locked = false;
+  setFeedback('', '');
+  listenLocked = false;
 
   const choices = shuffle([
     item,
-    ...shuffle(ITEMS.filter(x => x.id !== item.id)).slice(0,3)
+    ...shuffle(ITEMS.filter(x => x.id !== item.id)).slice(0, 3)
   ]);
 
-  let html = '<div class="centerBox" style="margin-bottom:14px;">' +
-             (listenState.index + 1) + ' / ' + listenState.order.length +
-             '</div>';
+  let html = '';
+  html += '<div class="centerBox">' + (listenIndex + 1) + ' / ' + listenOrder.length + '</div>';
+  html += '<div class="choiceGrid">';
 
-  html += '<div class="gameGrid choiceGrid">';
   choices.forEach(choice=>{
     html += `
       <button class="choiceBtn" data-id="${choice.id}">
@@ -630,157 +488,153 @@ function renderListenGame(){
       </button>
     `;
   });
-  html += '</div>';
 
+  html += '</div>';
   gameArea.innerHTML = html;
 
-  gameArea.querySelectorAll('.choiceBtn').forEach(btn=>{
-    btn.onclick = ()=>{
-      if(locked) return;
-      const isCorrect = btn.dataset.id === item.id;
-      if(isCorrect){
-        locked = true;
+  const buttons = gameArea.querySelectorAll('.choiceBtn');
+
+  buttons.forEach(btn=>{
+    btn.onclick = function(){
+      if(listenLocked) return;
+
+      const pickedId = btn.getAttribute('data-id');
+
+      if(pickedId === item.id){
+        listenLocked = true;
         btn.classList.add('good');
         setFeedback('Richteg!', 'good');
-        setTimeout(()=>{
-          if(listenState.index < listenState.order.length - 1){
-            listenState.index++;
-            renderListenGame();
-          }else{
-            instructions.textContent = 'Bravo!';
-            gameArea.innerHTML = '<div class="endBox">Du hues Spill 1 fäerdeg. Klick op de Pfeil no riets fir dat nächst Spill.</div>';
-            setFeedback('Fäerdeg!', 'good');
-          }
+
+        setTimeout(function(){
+          listenIndex++;
+          renderListenGame();
         }, 700);
       }else{
         btn.classList.add('bad');
         setFeedback('Nach eng Kéier probéieren.', 'bad');
-        setTimeout(()=>{
+
+        setTimeout(function(){
           btn.classList.remove('bad');
-          setFeedback('');
+          setFeedback('', '');
         }, 500);
       }
     };
   });
 }
 
+/* ===== GAME 2 ===== */
 function initMemoryGame(){
-  const selected = shuffle(ITEMS).slice(0,6);
   const cards = [];
 
-  selected.forEach(item=>{
+  memoryBaseItems.forEach(item=>{
     cards.push({
+      uid:'img-' + item.id,
       pair:item.id,
       type:'img',
-      content:item.img,
-      label:item.word,
-      audio:item.audio
+      value:item.img,
+      audio:item.audio,
+      open:false,
+      matched:false
     });
+
     cards.push({
+      uid:'word-' + item.id,
       pair:item.id,
       type:'word',
-      content:item.word,
-      label:item.word,
-      audio:item.audio
+      value:item.word,
+      audio:item.audio,
+      open:false,
+      matched:false
     });
   });
 
-  memoryState = {
-    cards:shuffle(cards).map((card, index)=>({
-      ...card,
-      uid:index,
-      open:false,
-      matched:false
-    })),
-    first:null,
-    second:null,
-    lock:false,
-    matches:0
-  };
+  memoryCards = shuffle(cards);
+  memoryFirst = null;
+  memorySecond = null;
+  memoryLocked = false;
+  memoryMatches = 0;
 }
 
 function renderMemoryGame(){
-  if(!memoryState.cards || !memoryState.cards.length){
-    initMemoryGame();
+  if(memoryMatches === memoryBaseItems.length){
+    instructions.textContent = 'Bravo!';
+    setFeedback('Fäerdeg!', 'good');
+    gameArea.innerHTML = '<div class="doneBox">Du hues Spill 2 fäerdeg. Klick op ↻ fir nach eng Kéier ze spillen.</div>';
+    return;
   }
 
   instructions.textContent = 'Fann d’Puer: Bild + Wuert.';
-  setFeedback('');
+  setFeedback('', '');
 
-  let html = '<div class="memoryGrid">';
-  memoryState.cards.forEach(card=>{
-    let inner = '<div class="back">?</div>';
+  let html = '';
+  html += '<div class="centerBox">' + memoryMatches + ' / ' + memoryBaseItems.length + '</div>';
+  html += '<div class="memoryGrid">';
+
+  memoryCards.forEach(card=>{
+    let inside = '<div class="memoryBack">?</div>';
 
     if(card.open || card.matched){
       if(card.type === 'img'){
-        inner = `<img src="${card.content}" alt="${card.label}">`;
+        inside = '<img src="' + card.value + '" alt="">';
       }else{
-        inner = `<div>${card.content}</div>`;
+        inside = '<div>' + card.value + '</div>';
       }
     }
 
-    html += `
-      <button class="memoryCard ${card.matched ? 'matched' : ''}" data-uid="${card.uid}">
-        ${inner}
-      </button>
-    `;
+    html += '<button class="memoryCard' + (card.matched ? ' good' : '') + '" data-uid="' + card.uid + '">' + inside + '</button>';
   });
-  html += '</div>';
 
+  html += '</div>';
   gameArea.innerHTML = html;
 
-  gameArea.querySelectorAll('.memoryCard').forEach(btn=>{
-    btn.onclick = ()=>{
-      const uid = Number(btn.dataset.uid);
-      const card = memoryState.cards.find(c => c.uid === uid);
-      if(!card || card.open || card.matched || memoryState.lock) return;
+  const buttons = gameArea.querySelectorAll('.memoryCard');
+
+  buttons.forEach(btn=>{
+    btn.onclick = function(){
+      if(memoryLocked) return;
+
+      const uid = btn.getAttribute('data-uid');
+      const card = memoryCards.find(c => c.uid === uid);
+
+      if(!card || card.open || card.matched) return;
 
       card.open = true;
+
       if(card.type === 'word'){
         playAudio(card.audio);
       }
 
-      if(memoryState.first === null){
-        memoryState.first = uid;
+      if(memoryFirst === null){
+        memoryFirst = card;
         renderMemoryGame();
         return;
       }
 
-      memoryState.second = uid;
-      memoryState.lock = true;
+      memorySecond = card;
+      memoryLocked = true;
       renderMemoryGame();
 
-      const firstCard = memoryState.cards.find(c => c.uid === memoryState.first);
-      const secondCard = memoryState.cards.find(c => c.uid === memoryState.second);
-
-      if(firstCard.pair === secondCard.pair){
+      if(memoryFirst.pair === memorySecond.pair){
         setFeedback('Bravo!', 'good');
-        setTimeout(()=>{
-          firstCard.matched = true;
-          secondCard.matched = true;
-          firstCard.open = true;
-          secondCard.open = true;
-          memoryState.first = null;
-          memoryState.second = null;
-          memoryState.lock = false;
-          memoryState.matches++;
 
-          if(memoryState.matches === memoryState.cards.length / 2){
-            instructions.textContent = 'Bravo!';
-            gameArea.innerHTML = '<div class="endBox">Du hues Spill 2 fäerdeg. Klick op de Pfeil no riets fir dat nächst Spill.</div>';
-            setFeedback('Fäerdeg!', 'good');
-          }else{
-            renderMemoryGame();
-          }
-        }, 500);
+        setTimeout(function(){
+          memoryFirst.matched = true;
+          memorySecond.matched = true;
+          memoryFirst = null;
+          memorySecond = null;
+          memoryLocked = false;
+          memoryMatches++;
+          renderMemoryGame();
+        }, 550);
       }else{
         setFeedback('Dat passt net.', 'bad');
-        setTimeout(()=>{
-          firstCard.open = false;
-          secondCard.open = false;
-          memoryState.first = null;
-          memoryState.second = null;
-          memoryState.lock = false;
+
+        setTimeout(function(){
+          memoryFirst.open = false;
+          memorySecond.open = false;
+          memoryFirst = null;
+          memorySecond = null;
+          memoryLocked = false;
           renderMemoryGame();
         }, 850);
       }
@@ -788,379 +642,63 @@ function renderMemoryGame(){
   });
 }
 
-function initSentenceGame(){
-  const prompts = BUILD_SENTENCES.map(tokens=>{
-    const allWords = [...new Set(BUILD_SENTENCES.flat().filter(t => !['.'].includes(t)))];
-    const coreWords = tokens.filter(t => !['.'].includes(t));
-    const distractors = shuffle(allWords.filter(w => !coreWords.includes(w))).slice(0,2);
-    return {
-      correct:tokens,
-      options:shuffle([...tokens, ...distractors])
-    };
-  });
-
-  sentenceState = {
-    prompts:shuffle(prompts),
-    index:0,
-    placed:[]
-  };
-}
-
-function renderSentenceGame(){
-  if(!sentenceState.prompts || !sentenceState.prompts.length){
-    initSentenceGame();
-  }
-
-  const prompt = sentenceState.prompts[sentenceState.index];
-  instructions.textContent = 'Bau de richtege Saz.';
-  setFeedback('');
-
-  let html = '<div class="centerBox" style="margin-bottom:14px;">' +
-             (sentenceState.index + 1) + ' / ' + sentenceState.prompts.length +
-             '</div>';
-
-  html += '<div class="sentenceSlots" id="slots">';
-  prompt.correct.forEach((token, idx)=>{
-    const placed = sentenceState.placed[idx] || '';
-    html += `
-      <button class="slotBtn" data-slot="${idx}">
-        ${placed || '...'}
-      </button>
-    `;
-  });
-  html += '</div>';
-
-  html += '<div style="height:14px;"></div>';
-  html += '<div class="tokenPool">';
-
-  prompt.options.forEach((token, idx)=>{
-    const usedCount = sentenceState.placed.filter(x => x === token).length;
-    const totalAvailable = prompt.options.filter(x => x === token).length;
-    if(usedCount < totalAvailable){
-      html += `
-        <button class="tileBtn" data-token="${token}" data-index="${idx}">
-          ${token}
-        </button>
-      `;
-    }
-  });
-
-  html += '</div>';
-
-  gameArea.innerHTML = html;
-
-  gameArea.querySelectorAll('.tileBtn').forEach(btn=>{
-    btn.onclick = ()=>{
-      const token = btn.dataset.token;
-      const firstEmpty = sentenceState.placed.findIndex(x => !x);
-      if(firstEmpty === -1){
-        sentenceState.placed.push(token);
-      }else{
-        sentenceState.placed[firstEmpty] = token;
-      }
-
-      while(sentenceState.placed.length < prompt.correct.length){
-        sentenceState.placed.push('');
-      }
-
-      renderSentenceGame();
-      checkSentence();
-    };
-  });
-
-  gameArea.querySelectorAll('.slotBtn').forEach(btn=>{
-    btn.onclick = ()=>{
-      const slot = Number(btn.dataset.slot);
-      sentenceState.placed[slot] = '';
-      renderSentenceGame();
-    };
-  });
-
-  while(sentenceState.placed.length < prompt.correct.length){
-    sentenceState.placed.push('');
-  }
-}
-
-function checkSentence(){
-  const prompt = sentenceState.prompts[sentenceState.index];
-  if(sentenceState.placed.some(x => !x)) return;
-
-  const ok = prompt.correct.every((token, idx)=>token === sentenceState.placed[idx]);
-
-  if(ok){
-    setFeedback('Richteg!', 'good');
-    setTimeout(()=>{
-      if(sentenceState.index < sentenceState.prompts.length - 1){
-        sentenceState.index++;
-        sentenceState.placed = [];
-        renderSentenceGame();
-      }else{
-        instructions.textContent = 'Bravo!';
-        gameArea.innerHTML = '<div class="endBox">Du hues Spill 3 fäerdeg. Klick op de Pfeil no riets fir dat nächst Spill.</div>';
-        setFeedback('Fäerdeg!', 'good');
-      }
-    }, 700);
-  }else{
-    setFeedback('Kuck nach eng Kéier.', 'bad');
-  }
-}
-
-function initQuizGame(){
-  quizState = {
-    questions:shuffle(QUIZ_QUESTIONS),
-    index:0
-  };
-}
-
-function renderQuizGame(){
-  if(!quizState.questions || !quizState.questions.length){
-    initQuizGame();
-  }
-
-  const q = quizState.questions[quizState.index];
-  instructions.textContent = q.prompt;
-  setFeedback('');
-  locked = false;
-
-  let html = '<div class="centerBox" style="margin-bottom:14px;">' +
-             (quizState.index + 1) + ' / ' + quizState.questions.length +
-             '</div>';
-
-  if(q.img){
-    html += `<img class="quizImage" src="${q.img}" alt="">`;
-  }
-
-  html += '<div class="quizOptions">';
-  q.options.forEach((opt, idx)=>{
-    html += `
-      <button class="quizBtn" data-index="${idx}">
-        ${opt}
-      </button>
-    `;
-  });
-  html += '</div>';
-
-  gameArea.innerHTML = html;
-
-  gameArea.querySelectorAll('.quizBtn').forEach(btn=>{
-    btn.onclick = ()=>{
-      if(locked) return;
-      const idx = Number(btn.dataset.index);
-      if(idx === q.correctIndex){
-        locked = true;
-        btn.classList.add('good');
-        setFeedback('Richteg!', 'good');
-        setTimeout(()=>{
-          if(quizState.index < quizState.questions.length - 1){
-            quizState.index++;
-            renderQuizGame();
-          }else{
-            instructions.textContent = 'Bravo!';
-            gameArea.innerHTML = '<div class="endBox">Du hues Spill 4 fäerdeg. Klick op de Pfeil no riets fir dat nächst Spill.</div>';
-            setFeedback('Fäerdeg!', 'good');
-          }
-        }, 700);
-      }else{
-        btn.classList.add('bad');
-        setFeedback('Dat ass net richteg.', 'bad');
-        setTimeout(()=>{
-          btn.classList.remove('bad');
-          setFeedback('');
-        }, 500);
-      }
-    };
-  });
-}
-
-function initSortGame(){
-  sortState = {
-    items:shuffle([
-      ITEMS.find(x => x.id === 'bauer'),
-      ITEMS.find(x => x.id === 'kou'),
-      ITEMS.find(x => x.id === 'hong'),
-      ITEMS.find(x => x.id === 'iesel'),
-      ITEMS.find(x => x.id === 'jippelchen'),
-      ITEMS.find(x => x.id === 'lammchen')
-    ]),
-    placed:{
-      persoun:[],
-      'déier':[],
-      'bébé':[]
-    },
-    activeId:null
-  };
-}
-
-function renderSortGame(){
-  if(!sortState.items || !sortState.items.length){
-    initSortGame();
-  }
-
-  instructions.textContent = 'Sortéier an déi richteg Kategorie.';
-  setFeedback('');
-
-  let html = '<div class="sortWrap">';
-  html += '<div class="poolWrap">';
-
-  sortState.items.forEach(item=>{
-    html += `
-      <button class="poolItem ${sortState.activeId === item.id ? 'good' : ''}" data-id="${item.id}">
-        <img src="${item.img}" alt="${item.word}">
-        <div>${item.word}</div>
-      </button>
-    `;
-  });
-
-  html += '</div>';
-  html += '<div class="columns">';
-
-  SORT_CATEGORIES.forEach(cat=>{
-    html += `
-      <div class="column">
-        <h3 class="columnTitle">${cat.label}</h3>
-        <div class="columnItems">
-          ${sortState.placed[cat.id].map(item => `
-            <div class="poolItem good">
-              <img src="${item.img}" alt="${item.word}">
-              <div>${item.word}</div>
-            </div>
-          `).join('')}
-        </div>
-        <div style="height:10px;"></div>
-        <button class="catBtn" data-cat="${cat.id}">Hei setzen</button>
-      </div>
-    `;
-  });
-
-  html += '</div>';
-  html += '</div>';
-
-  gameArea.innerHTML = html;
-
-  gameArea.querySelectorAll('.poolItem[data-id]').forEach(btn=>{
-    btn.onclick = ()=>{
-      sortState.activeId = btn.dataset.id;
-      renderSortGame();
-    };
-  });
-
-  gameArea.querySelectorAll('.catBtn').forEach(btn=>{
-    btn.onclick = ()=>{
-      if(!sortState.activeId) return;
-      const item = sortState.items.find(x => x.id === sortState.activeId);
-      const cat = btn.dataset.cat;
-
-      if(item.cat === cat){
-        sortState.placed[cat].push(item);
-        sortState.items = sortState.items.filter(x => x.id !== item.id);
-        sortState.activeId = null;
-        setFeedback('Richteg!', 'good');
-
-        if(sortState.items.length === 0){
-          instructions.textContent = 'Bravo!';
-          gameArea.innerHTML = '<div class="endBox">Du hues all d'Spiller fäerdeg. Klick op ↻ fir nach eng Kéier ze spillen.</div>';
-          setFeedback('Fäerdeg!', 'good');
-        }else{
-          renderSortGame();
-        }
-      }else{
-        setFeedback('Dat passt net an déi Kategorie.', 'bad');
-      }
-    };
-  });
-}
-
+/* ===== MAIN RENDER ===== */
 function renderCurrentGame(){
   stopAudio();
   updateTopBar();
 
   if(currentGame === 0){
     renderListenGame();
-  }
-
-  if(currentGame === 1){
+  }else{
     renderMemoryGame();
-  }
-
-  if(currentGame === 2){
-    renderSentenceGame();
-  }
-
-  if(currentGame === 3){
-    renderQuizGame();
-  }
-
-  if(currentGame === 4){
-    renderSortGame();
   }
 }
 
 function replayCurrentGame(){
+  stopAudio();
+
   if(currentGame === 0){
     initListenGame();
-  }
-
-  if(currentGame === 1){
+  }else{
     initMemoryGame();
-  }
-
-  if(currentGame === 2){
-    initSentenceGame();
-  }
-
-  if(currentGame === 3){
-    initQuizGame();
-  }
-
-  if(currentGame === 4){
-    initSortGame();
   }
 
   renderCurrentGame();
 }
 
 function playCurrentGameAudio(){
-  if(currentGame === 0){
-    const item = listenState.order[listenState.index];
-    if(item){
-      playAudio(item.audio);
-    }
-  }
+  if(currentGame !== 0) return;
 
-  if(currentGame === 3){
-    const q = quizState.questions[quizState.index];
-    if(q && q.audio){
-      playAudio(q.audio);
-    }
+  const item = currentListenItem();
+  if(item){
+    playAudio(item.audio);
   }
 }
 
-document.getElementById('prev').onclick = ()=>{
+/* ===== BUTTONS ===== */
+document.getElementById('prev').onclick = function(){
   if(currentGame === 0) return;
   currentGame--;
   renderCurrentGame();
 };
 
-document.getElementById('next').onclick = ()=>{
+document.getElementById('next').onclick = function(){
   if(currentGame === GAME_TITLES.length - 1) return;
   currentGame++;
   renderCurrentGame();
 };
 
-document.getElementById('play').onclick = ()=>{
-  if(currentGame === 1 || currentGame === 2 || currentGame === 4) return;
+document.getElementById('play').onclick = function(){
   playCurrentGameAudio();
 };
 
-document.getElementById('replay').onclick = ()=>{
+document.getElementById('replay').onclick = function(){
   replayCurrentGame();
 };
 
+/* ===== START ===== */
 initListenGame();
 initMemoryGame();
-initSentenceGame();
-initQuizGame();
-initSortGame();
 renderCurrentGame();
 </script>
 
