@@ -1,11 +1,1168 @@
-<!DOCTYPE html> <html lang="lb"> <head> <meta charset="utf-8"/> <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/> <title>P3 – Bauerenhaff</title> <style> @font-face{ font-family:'Schoulschrëft'; src:url('https://raw.githubusercontent.com/albrechtclaire1007/schoulschreft/main/schoulschreft_bold%5B2%5D.TTF') format('truetype'); font-weight:bold; font-style:normal; font-display:swap; } :root{ --bg1:#E7F5FF; --bg2:#CFEAFF; --bar:#6FAFE6; --barBorder:#4D90CD; --ink:#1f1f1f; --white:#fff; --border:3px; --shadow:0 10px 24px rgba(0,0,0,.08); --pad:clamp(10px,2.2vw,16px); --r:18px; --iconArrow:"https://i.postimg.cc/QBYTSN08/p3arrow.png"; --iconPlay:"https://i.postimg.cc/ZB9yQkMt/p3play.png"; --iconReplay:"https://i.postimg.cc/ft30P4rQ/p3replay.png"; --good:#BFECC8; --bad:#FFD3D3; --tile:#ffffff; --tileBorder:#cfe3f5; } *{box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none; outline:none;} html,body{ height:100%; margin:0; background:linear-gradient(135deg,var(--bg2),var(--bg1)); color:var(--ink); font-family:'Schoulschrëft', Arial, sans-serif; } .hidden{display:none!important;} /* ===== TOP BAR (everything inside) ===== */ .topBar{ position:sticky; top:10px; z-index:10; width:min(1200px,96vw); margin:10px auto 0; background:var(--bar); border:var(--border) solid var(--barBorder); border-radius:999px; box-shadow:var(--shadow); padding:10px 12px; display:grid; grid-template-columns: 70px 1fr auto; align-items:center; gap:10px; } .barBtn{ border:none; background:transparent; cursor:pointer; display:grid; place-items:center; width:54px; height:54px; } .barBtn:active{transform:scale(.98);} .barBtn img{width:46px; height:46px; object-fit:contain;} .barBtn.back img{transform:rotate(180deg);} .barTitle{ text-align:center; color:#fff; font-size:clamp(1.5rem,3.2vw,2.4rem); margin:0; line-height:1.1; padding:0 6px; } .barRight{ display:flex; align-items:center; gap:6px; } .barRight .barBtn{width:50px; height:50px;} .barRight .barBtn img{width:42px; height:42px;} /* ===== CONTENT ===== */ .wrap{ width:min(1200px,96vw); margin:18px auto 26px; padding:var(--pad); display:flex; flex-direction:column; gap:14px; } .card{ background:rgba(255,255,255,.8); border:var(--border) solid rgba(255,255,255,.65); border-radius:var(--r); box-shadow:var(--shadow); padding:clamp(12px,2.2vw,18px); } .cardTitle{ margin:0 0 8px 0; font-size:clamp(1.1rem,2.2vw,1.5rem); opacity:.9; } .placeholder{ border:3px dashed rgba(0,0,0,.2); border-radius:14px; padding:18px; background:rgba(255,255,255,.55); font-size:1.05rem; opacity:.85; } /* ===== CHAPTER STYLES ===== */ .infoRow{ display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px; } .progress{ font-size:clamp(1rem,2vw,1.25rem); } .feedback{ min-height:1.4em; font-size:clamp(1rem,2vw,1.2rem); } .feedback.good{color:#1f7a39;} .feedback.bad{color:#b33a3a;} .promptBox{ display:grid; place-items:center; min-height:96px; border-radius:16px; border:3px dashed rgba(77,144,205,.35); background:rgba(255,255,255,.65); padding:14px; text-align:center; font-size:clamp(1.1rem,2.4vw,1.45rem); } .grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:14px; } .option{ border:3px solid var(--tileBorder); background:var(--tile); border-radius:18px; box-shadow:var(--shadow); padding:12px; cursor:pointer; transition:transform .08s ease, background .15s ease, border-color .15s ease; min-height:220px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; } .option:active{transform:scale(.98);} .option img{ width:min(100%,240px); max-height:180px; object-fit:contain; display:block; } .option .label{ text-align:center; font-size:clamp(1rem,2vw,1.25rem); line-height:1.1; } .option.good{ background:var(--good); border-color:#73c785; } .option.bad{ background:var(--bad); border-color:#e78a8a; } .muted{ opacity:.55; pointer-events:none; } .smallNote{ text-align:center; margin-top:10px; font-size:clamp(.95rem,1.9vw,1.1rem); opacity:.8; } .endBox{ display:grid; place-items:center; text-align:center; min-height:240px; padding:20px; border-radius:18px; background:rgba(255,255,255,.7); border:3px dashed rgba(77,144,205,.35); } .endBox h2{ margin:0 0 8px 0; font-size:clamp(1.6rem,3vw,2.2rem); } .endBox p{ margin:0; font-size:clamp(1rem,2vw,1.25rem); } @media (max-width:700px){ .grid{ grid-template-columns:1fr; } .option{ min-height:190px; } } </style> </head> <body> <div class="topBar"> <button class="barBtn back" id="prev" aria-label="Virdrun"> <img src="https://i.postimg.cc/QBYTSN08/p3arrow.png" alt=""> </button> <h1 class="barTitle" id="gameTitle">P3 – Lauschter a klick</h1> <div class="barRight"> <button class="barBtn" id="play" aria-label="Play"> <img src="https://i.postimg.cc/ZB9yQkMt/p3play.png" alt=""> </button> <button class="barBtn" id="replay" aria-label="Replay"> <img src="https://i.postimg.cc/ft30P4rQ/p3replay.png" alt=""> </button> <button class="barBtn" id="next" aria-label="Nächst"> <img src="https://i.postimg.cc/QBYTSN08/p3arrow.png" alt=""> </button> </div> </div> <div class="wrap"> <div class="card"> <div class="infoRow"> <p class="cardTitle">Lauschter a klick op dat richtegt Bild.</p> <div class="progress" id="progress">1 / 13</div> </div>
-<div class="promptBox" id="promptBox">
-  Klick op ▶︎ a lauschter gutt.
+<!DOCTYPE html>
+<html lang="lb">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>P3 – Bauerenhaff</title>
+
+<style>
+@font-face{
+  font-family:'Schoulschrëft';
+  src:url('https://raw.githubusercontent.com/albrechtclaire1007/schoulschreft/main/schoulschreft_bold%5B2%5D.TTF') format('truetype');
+  font-weight:bold;
+  font-style:normal;
+  font-display:swap;
+}
+
+:root{
+  /* P3 light blue background */
+  --bg1:#E7F5FF;
+  --bg2:#CFEAFF;
+
+  /* bar + accents */
+  --bar:#6FAFE6;
+  --barBorder:#4D90CD;
+
+  --ink:#1f1f1f;
+  --white:#fff;
+  --border:3px;
+  --shadow:0 10px 24px rgba(0,0,0,.08);
+  --pad:clamp(10px,2.2vw,16px);
+  --r:18px;
+
+  /* icons */
+  --iconArrow:"https://i.postimg.cc/QBYTSN08/p3arrow.png";
+  --iconPlay:"https://i.postimg.cc/ZB9yQkMt/p3play.png";
+  --iconReplay:"https://i.postimg.cc/ft30P4rQ/p3replay.png";
+
+  --good:#b7f0c8;
+  --bad:#ffd5d5;
+  --soft:#ffffff;
+  --line:#d7e8f7;
+  --slot:#eef7ff;
+}
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;
+  outline:none;
+}
+
+html,body{
+  height:100%;
+  margin:0;
+  background:linear-gradient(135deg,var(--bg2),var(--bg1));
+  color:var(--ink);
+  font-family:'Schoulschrëft', Arial, sans-serif;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* ===== TOP BAR (everything inside) ===== */
+.topBar{
+  position:sticky;
+  top:10px;
+  z-index:10;
+  width:min(1200px,96vw);
+  margin:10px auto 0;
+  background:var(--bar);
+  border:var(--border) solid var(--barBorder);
+  border-radius:999px;
+  box-shadow:var(--shadow);
+  padding:10px 12px;
+  display:grid;
+  grid-template-columns:70px 1fr auto;
+  align-items:center;
+  gap:10px;
+}
+
+.barBtn{
+  border:none;
+  background:transparent;
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  width:54px;
+  height:54px;
+}
+
+.barBtn:active{
+  transform:scale(.98);
+}
+
+.barBtn img{
+  width:46px;
+  height:46px;
+  object-fit:contain;
+}
+
+.barBtn.back img{
+  transform:rotate(180deg);
+}
+
+.barTitle{
+  text-align:center;
+  color:#fff;
+  font-size:clamp(1.5rem,3.2vw,2.4rem);
+  margin:0;
+  line-height:1.1;
+  padding:0 6px;
+}
+
+.barRight{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.barRight .barBtn{
+  width:50px;
+  height:50px;
+}
+
+.barRight .barBtn img{
+  width:42px;
+  height:42px;
+}
+
+/* ===== CONTENT ===== */
+.wrap{
+  width:min(1200px,96vw);
+  margin:18px auto 26px;
+  padding:var(--pad);
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.card{
+  background:rgba(255,255,255,.8);
+  border:var(--border) solid rgba(255,255,255,.65);
+  border-radius:var(--r);
+  box-shadow:var(--shadow);
+  padding:clamp(12px,2.2vw,18px);
+}
+
+.cardTitle{
+  margin:0 0 8px 0;
+  font-size:clamp(1.1rem,2.2vw,1.5rem);
+  opacity:.9;
+}
+
+.placeholder{
+  border:3px dashed rgba(0,0,0,.2);
+  border-radius:14px;
+  padding:18px;
+  background:rgba(255,255,255,.55);
+  font-size:1.05rem;
+  opacity:.85;
+}
+
+/* ===== CHAPTER CONTENT ===== */
+.topInfo{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:8px;
+}
+
+.stepPill{
+  background:#fff;
+  border:3px solid var(--line);
+  border-radius:999px;
+  padding:8px 14px;
+  font-size:clamp(.95rem,1.8vw,1.1rem);
+}
+
+.instructions{
+  min-height:34px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:clamp(1rem,2vw,1.2rem);
+  padding:4px 8px 10px;
+}
+
+.feedback{
+  min-height:34px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:clamp(1rem,2vw,1.2rem);
+  padding:4px 8px;
+}
+
+.feedback.good{
+  color:#228048;
+}
+
+.feedback.bad{
+  color:#b23c3c;
+}
+
+.gameGrid{
+  display:grid;
+  gap:14px;
+}
+
+.choiceGrid{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+
+.choiceBtn,
+.quizBtn,
+.tileBtn,
+.slotBtn,
+.catBtn,
+.poolItem,
+.memoryCard{
+  border:3px solid var(--line);
+  border-radius:18px;
+  background:var(--soft);
+  box-shadow:var(--shadow);
+  cursor:pointer;
+  font-family:'Schoulschrëft', Arial, sans-serif;
+  color:var(--ink);
+}
+
+.choiceBtn,
+.quizBtn,
+.catBtn{
+  padding:12px;
+}
+
+.choiceBtn:active,
+.quizBtn:active,
+.tileBtn:active,
+.slotBtn:active,
+.catBtn:active,
+.poolItem:active,
+.memoryCard:active{
+  transform:scale(.98);
+}
+
+.choiceBtn img{
+  width:100%;
+  max-width:220px;
+  max-height:150px;
+  object-fit:contain;
+  display:block;
+  margin:0 auto 8px auto;
+}
+
+.choiceLabel{
+  text-align:center;
+  font-size:clamp(1rem,2vw,1.2rem);
+}
+
+.good{
+  background:var(--good)!important;
+}
+
+.bad{
+  background:var(--bad)!important;
+}
+
+.centerBox{
+  border:3px dashed var(--line);
+  border-radius:18px;
+  background:rgba(255,255,255,.55);
+  padding:18px;
+  text-align:center;
+}
+
+.memoryGrid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+}
+
+.memoryCard{
+  min-height:120px;
+  padding:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  overflow:hidden;
+}
+
+.memoryCard img{
+  width:100%;
+  max-width:110px;
+  max-height:90px;
+  object-fit:contain;
+}
+
+.memoryCard .back{
+  font-size:2rem;
+}
+
+.memoryCard.matched{
+  background:var(--good);
+}
+
+.sentenceSlots,
+.tokenPool{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+}
+
+.slotBtn{
+  min-width:110px;
+  min-height:56px;
+  padding:10px 14px;
+  background:var(--slot);
+  font-size:clamp(1rem,2vw,1.15rem);
+}
+
+.tileBtn,
+.poolItem{
+  padding:10px 14px;
+  font-size:clamp(1rem,2vw,1.15rem);
+}
+
+.quizImage{
+  display:block;
+  margin:0 auto 12px auto;
+  width:min(100%,260px);
+  max-height:180px;
+  object-fit:contain;
+}
+
+.quizOptions{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+
+.sortWrap{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+}
+
+.poolWrap{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+}
+
+.columns{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+
+.column{
+  border:3px dashed var(--line);
+  border-radius:18px;
+  padding:12px;
+  background:rgba(255,255,255,.55);
+  min-height:170px;
+}
+
+.columnTitle{
+  text-align:center;
+  margin:0 0 10px 0;
+  font-size:clamp(1.05rem,2vw,1.25rem);
+}
+
+.columnItems{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+}
+
+.poolItem img{
+  width:70px;
+  height:60px;
+  object-fit:contain;
+  display:block;
+  margin:0 auto 6px auto;
+}
+
+.endBox{
+  border:3px dashed var(--line);
+  border-radius:18px;
+  background:rgba(255,255,255,.55);
+  padding:24px 18px;
+  text-align:center;
+  font-size:clamp(1.1rem,2.4vw,1.4rem);
+}
+
+@media (max-width:760px){
+  .choiceGrid,
+  .quizOptions,
+  .columns{
+    grid-template-columns:1fr;
+  }
+
+  .memoryGrid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
+
+@media (max-width:520px){
+  .memoryGrid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="topBar">
+  <button class="barBtn back" id="prev" aria-label="Virdrun">
+    <img src="https://i.postimg.cc/QBYTSN08/p3arrow.png" alt="">
+  </button>
+
+  <h1 class="barTitle" id="gameTitle">P3 – Bauerenhaff</h1>
+
+  <div class="barRight">
+    <button class="barBtn" id="play" aria-label="Play">
+      <img src="https://i.postimg.cc/ZB9yQkMt/p3play.png" alt="">
+    </button>
+    <button class="barBtn" id="replay" aria-label="Replay">
+      <img src="https://i.postimg.cc/ft30P4rQ/p3replay.png" alt="">
+    </button>
+    <button class="barBtn" id="next" aria-label="Nächst">
+      <img src="https://i.postimg.cc/QBYTSN08/p3arrow.png" alt="">
+    </button>
+  </div>
 </div>
 
-<div class="feedback" id="feedback"></div>
+<div class="wrap">
+  <div class="card">
+    <div class="topInfo">
+      <p class="cardTitle" id="cardTitle">Spill 1</p>
+      <div class="stepPill" id="stepPill">1 / 5</div>
+    </div>
 
-<div class="grid" id="grid"></div>
+    <div class="instructions" id="instructions"></div>
+    <div class="feedback" id="feedback"></div>
 
-<div class="smallNote">▶︎ = lauschteren &nbsp;&nbsp; ↻ = nei mëschen &nbsp;&nbsp; Pfeiler = virdrun / nächst</div>
-</div> </div> <script> const AUDIO_BASE = 'https://github.com/albrechtclaire1007/p3bauerenhaff/raw/refs/heads/main/'; const ITEMS = [ { word:'d’Gees', img:'https://i.postimg.cc/PC7Nc6pp/gees.png', audio:'GEESS.mp3' }, { word:'de Bauer', img:'https://i.postimg.cc/Z0dNtv6g/bauer.png', audio:'BAUER.mp3' }, { word:'d’Fierkel', img:'https://i.postimg.cc/FdjhGvJw/fiekel.png', audio:'FIERKEL.mp3' }, { word:'de Fillen', img:'https://i.postimg.cc/5YwfpJCW/fillen.png', audio:'FILLEN.mp3' }, { word:'den Hong', img:'https://i.postimg.cc/R3nqzcwC/hong.png', audio:'HONG.mp3' }, { word:'den Iesel', img:'https://i.postimg.cc/R3nqzcwx/iesel.png', audio:'IESEL.mp3' }, { word:'d’Int', img:'https://i.postimg.cc/8FrsVhLP/int.png', audio:'INT.mp3' }, { word:'d’Jippelchen', img:'https://i.postimg.cc/phbrVpBN/jippelchen.png', audio:'JIPPELCHEN.mp3' }, { word:'d’Kallef', img:'https://i.postimg.cc/R65hCNTZ/kallef.png', audio:'KALLEF.mp3' }, { word:'d’Kou', img:'https://i.postimg.cc/Fd5zF7xR/kou.png', audio:'KOU.mp3' }, { word:'d’Lämmchen', img:'https://i.postimg.cc/zbZvDVkR/lammchen.png', audio:'LAMMCHEN.mp3' }, { word:'d’Päerd', img:'https://i.postimg.cc/R67FW4Ps/paerd.png', audio:'PAERD.mp3' }, { word:'d’Schof', img:'https://i.postimg.cc/jwH5Dt89/schof.png', audio:'SCHOF.mp3' } ]; /* ===== Hooks ===== */ const grid = document.getElementById('grid'); const feedback = document.getElementById('feedback'); const progress = document.getElementById('progress'); const promptBox = document.getElementById('promptBox'); const playBtn = document.getElementById('play'); let order = []; let current = 0; let currentChoices = []; let locked = false; let audio = null; let autoplayTimer = null; function shuffle(arr){ const a = [...arr]; for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; } function buildAudio(file){ return new Audio(AUDIO_BASE + file); } function stopAudio(){ if(audio){ audio.pause(); audio.currentTime = 0; } } function playCurrent(){ if(current >= order.length) return; stopAudio(); const item = order[current]; audio = buildAudio(item.audio); audio.play().catch(()=>{}); } function setFeedback(text='', cls=''){ feedback.textContent = text; feedback.className = 'feedback' + (cls ? ' ' + cls : ''); } function chooseOptions(correctItem){ const others = ITEMS.filter(x => x.audio !== correctItem.audio); const wrongs = shuffle(others).slice(0,3); return shuffle([correctItem, ...wrongs]); } function updateButtons(){ document.getElementById('prev').style.opacity = current > 0 ? '1' : '.45'; document.getElementById('next').style.opacity = current < order.length - 1 ? '1' : '.45'; playBtn.style.opacity = current < order.length ? '1' : '.45'; } function renderEnd(){ progress.textContent = order.length + ' / ' + order.length; promptBox.innerHTML = ''; grid.innerHTML = ` <div class="endBox"> <div> <h2>Bravo!</h2> <p>Du hues alles fäerdeg.</p> </div> </div> `; setFeedback('Klick op ↻ fir nach eng Kéier ze spillen.', 'good'); updateButtons(); } function render(){ clearTimeout(autoplayTimer); stopAudio(); if(current >= order.length){ renderEnd(); return; } const item = order[current]; currentChoices = chooseOptions(item); locked = false; progress.textContent = (current + 1) + ' / ' + order.length; promptBox.textContent = 'Lauschter a klick op dat richtegt Bild.'; setFeedback(''); grid.innerHTML = ''; currentChoices.forEach(choice=>{ const btn = document.createElement('button'); btn.className = 'option'; btn.innerHTML = ` <img src="${choice.img}" alt="${choice.word}"> <div class="label">${choice.word}</div> `; btn.onclick = ()=>handleChoice(btn, choice, item); grid.appendChild(btn); }); updateButtons(); autoplayTimer = setTimeout(()=>playCurrent(), 350); } function handleChoice(btn, choice, correctItem){ if(locked) return; if(choice.audio === correctItem.audio){ locked = true; btn.classList.add('good'); setFeedback('Richteg!', 'good'); setTimeout(()=>{ current++; render(); }, 700); }else{ btn.classList.add('bad'); setFeedback('Nach eng Kéier probéieren.', 'bad'); setTimeout(()=>{ btn.classList.remove('bad'); setFeedback(''); }, 550); } } function resetGame(){ clearTimeout(autoplayTimer); stopAudio(); order = shuffle(ITEMS); current = 0; render(); } document.getElementById('prev').onclick = ()=>{ if(current <= 0) return; current--; render(); }; document.getElementById('next').onclick = ()=>{ if(current >= order.length - 1) return; current++; render(); }; document.getElementById('play').onclick = ()=>{ playCurrent(); }; document.getElementById('replay').onclick = ()=>{ resetGame(); }; resetGame(); </script> </body> </html>
+    <div id="gameArea"></div>
+  </div>
+</div>
+
+<script>
+const AUDIO_BASE = 'https://github.com/albrechtclaire1007/p3bauerenhaff/raw/refs/heads/main/';
+
+const ITEMS = [
+  { id:'bauer', word:'de Bauer', img:'https://i.postimg.cc/Z0dNtv6g/bauer.png', audio:'BAUER.mp3', cat:'persoun' },
+  { id:'gees', word:'d’Gees', img:'https://i.postimg.cc/PC7Nc6pp/gees.png', audio:'GEESS.mp3', cat:'déier' },
+  { id:'fierkel', word:'d’Fierkel', img:'https://i.postimg.cc/FdjhGvJw/fiekel.png', audio:'FIERKEL.mp3', cat:'déier' },
+  { id:'fillen', word:'de Fillen', img:'https://i.postimg.cc/5YwfpJCW/fillen.png', audio:'FILLEN.mp3', cat:'déier' },
+  { id:'hong', word:'den Hong', img:'https://i.postimg.cc/R3nqzcwC/hong.png', audio:'HONG.mp3', cat:'déier' },
+  { id:'iesel', word:'den Iesel', img:'https://i.postimg.cc/R3nqzcwx/iesel.png', audio:'IESEL.mp3', cat:'déier' },
+  { id:'int', word:'d’Int', img:'https://i.postimg.cc/8FrsVhLP/int.png', audio:'INT.mp3', cat:'déier' },
+  { id:'jippelchen', word:'d’Jippelchen', img:'https://i.postimg.cc/phbrVpBN/jippelchen.png', audio:'JIPPELCHEN.mp3', cat:'déier' },
+  { id:'kallef', word:'d’Kallef', img:'https://i.postimg.cc/R65hCNTZ/kallef.png', audio:'KALLEF.mp3', cat:'déier' },
+  { id:'kou', word:'d’Kou', img:'https://i.postimg.cc/Fd5zF7xR/kou.png', audio:'KOU.mp3', cat:'déier' },
+  { id:'lammchen', word:'d’Lämmchen', img:'https://i.postimg.cc/zbZvDVkR/lammchen.png', audio:'LAMMCHEN.mp3', cat:'bébé' },
+  { id:'paerd', word:'d’Päerd', img:'https://i.postimg.cc/R67FW4Ps/paerd.png', audio:'PAERD.mp3', cat:'déier' },
+  { id:'schof', word:'d’Schof', img:'https://i.postimg.cc/jwH5Dt89/schof.png', audio:'SCHOF.mp3', cat:'déier' }
+];
+
+const GAME_TITLES = [
+  'P3 – Lauschter a klick',
+  'P3 – Memory',
+  'P3 – Saz bauen',
+  'P3 – Quiz',
+  'P3 – Sortéieren'
+];
+
+const BUILD_SENTENCES = [
+  ['De','Bauer','huet','eng','Kou','.'],
+  ['D’','Int','schwëmmt','.'],
+  ['D’','Päerd','leeft','.'],
+  ['Den','Hong','ass','um','Haff','.'],
+  ['D’','Gees','ass','um','Haff','.']
+];
+
+const QUIZ_QUESTIONS = [
+  {
+    prompt:'Wat ass dat?',
+    img:'https://i.postimg.cc/Fd5zF7xR/kou.png',
+    audio:'KOU.mp3',
+    options:['d’Kou','den Hong','d’Int','d’Gees'],
+    correctIndex:0
+  },
+  {
+    prompt:'Wat ass dat?',
+    img:'https://i.postimg.cc/R3nqzcwx/iesel.png',
+    audio:'IESEL.mp3',
+    options:['d’Päerd','den Iesel','d’Kallef','de Bauer'],
+    correctIndex:1
+  },
+  {
+    prompt:'Wat ass dat?',
+    img:'https://i.postimg.cc/FdjhGvJw/fiekel.png',
+    audio:'FIERKEL.mp3',
+    options:['d’Schof','d’Fierkel','d’Int','d’Kou'],
+    correctIndex:1
+  },
+  {
+    prompt:'Wat ass dat?',
+    img:'https://i.postimg.cc/phbrVpBN/jippelchen.png',
+    audio:'JIPPELCHEN.mp3',
+    options:['d’Lämmchen','d’Jippelchen','d’Gees','den Hong'],
+    correctIndex:1
+  },
+  {
+    prompt:'Wien ass dat?',
+    img:'https://i.postimg.cc/Z0dNtv6g/bauer.png',
+    audio:'BAUER.mp3',
+    options:['de Bauer','den Iesel','de Fillen','d’Kallef'],
+    correctIndex:0
+  }
+];
+
+const SORT_CATEGORIES = [
+  { id:'persoun', label:'Persoun' },
+  { id:'déier', label:'Déieren' },
+  { id:'bébé', label:'Bébé-Déieren' }
+];
+
+let currentGame = 0;
+let currentAudio = null;
+let locked = false;
+
+let listenState = {};
+let memoryState = {};
+let sentenceState = {};
+let quizState = {};
+let sortState = {};
+
+const cardTitle = document.getElementById('cardTitle');
+const stepPill = document.getElementById('stepPill');
+const instructions = document.getElementById('instructions');
+const feedback = document.getElementById('feedback');
+const gameArea = document.getElementById('gameArea');
+const gameTitle = document.getElementById('gameTitle');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
+const playBtn = document.getElementById('play');
+const replayBtn = document.getElementById('replay');
+
+function shuffle(arr){
+  const copy = [...arr];
+  for(let i = copy.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function setFeedback(text = '', cls = ''){
+  feedback.textContent = text;
+  feedback.className = 'feedback' + (cls ? ' ' + cls : '');
+}
+
+function stopAudio(){
+  if(currentAudio){
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+  }
+}
+
+function playAudio(file){
+  stopAudio();
+  currentAudio = new Audio(AUDIO_BASE + file);
+  currentAudio.play().catch(()=>{});
+}
+
+function updateTopBar(){
+  gameTitle.textContent = GAME_TITLES[currentGame];
+  cardTitle.textContent = 'Spill ' + (currentGame + 1);
+  stepPill.textContent = (currentGame + 1) + ' / ' + GAME_TITLES.length;
+  prevBtn.style.opacity = currentGame === 0 ? '.45' : '1';
+  nextBtn.style.opacity = currentGame === GAME_TITLES.length - 1 ? '.45' : '1';
+  playBtn.style.opacity = currentGame === 1 || currentGame === 2 || currentGame === 4 ? '.45' : '1';
+}
+
+function initListenGame(){
+  listenState = {
+    order:shuffle(ITEMS),
+    index:0
+  };
+}
+
+function renderListenGame(){
+  if(!listenState.order || !listenState.order.length){
+    initListenGame();
+  }
+
+  const item = listenState.order[listenState.index];
+
+  instructions.textContent = 'Lauschter a klick op dat richtegt Bild.';
+  setFeedback('');
+  locked = false;
+
+  const choices = shuffle([
+    item,
+    ...shuffle(ITEMS.filter(x => x.id !== item.id)).slice(0,3)
+  ]);
+
+  let html = '<div class="centerBox" style="margin-bottom:14px;">' +
+             (listenState.index + 1) + ' / ' + listenState.order.length +
+             '</div>';
+
+  html += '<div class="gameGrid choiceGrid">';
+  choices.forEach(choice=>{
+    html += `
+      <button class="choiceBtn" data-id="${choice.id}">
+        <img src="${choice.img}" alt="${choice.word}">
+        <div class="choiceLabel">${choice.word}</div>
+      </button>
+    `;
+  });
+  html += '</div>';
+
+  gameArea.innerHTML = html;
+
+  gameArea.querySelectorAll('.choiceBtn').forEach(btn=>{
+    btn.onclick = ()=>{
+      if(locked) return;
+      const isCorrect = btn.dataset.id === item.id;
+      if(isCorrect){
+        locked = true;
+        btn.classList.add('good');
+        setFeedback('Richteg!', 'good');
+        setTimeout(()=>{
+          if(listenState.index < listenState.order.length - 1){
+            listenState.index++;
+            renderListenGame();
+          }else{
+            instructions.textContent = 'Bravo!';
+            gameArea.innerHTML = '<div class="endBox">Du hues Spill 1 fäerdeg. Klick op de Pfeil no riets fir dat nächst Spill.</div>';
+            setFeedback('Fäerdeg!', 'good');
+          }
+        }, 700);
+      }else{
+        btn.classList.add('bad');
+        setFeedback('Nach eng Kéier probéieren.', 'bad');
+        setTimeout(()=>{
+          btn.classList.remove('bad');
+          setFeedback('');
+        }, 500);
+      }
+    };
+  });
+}
+
+function initMemoryGame(){
+  const selected = shuffle(ITEMS).slice(0,6);
+  const cards = [];
+
+  selected.forEach(item=>{
+    cards.push({
+      pair:item.id,
+      type:'img',
+      content:item.img,
+      label:item.word,
+      audio:item.audio
+    });
+    cards.push({
+      pair:item.id,
+      type:'word',
+      content:item.word,
+      label:item.word,
+      audio:item.audio
+    });
+  });
+
+  memoryState = {
+    cards:shuffle(cards).map((card, index)=>({
+      ...card,
+      uid:index,
+      open:false,
+      matched:false
+    })),
+    first:null,
+    second:null,
+    lock:false,
+    matches:0
+  };
+}
+
+function renderMemoryGame(){
+  if(!memoryState.cards || !memoryState.cards.length){
+    initMemoryGame();
+  }
+
+  instructions.textContent = 'Fann d’Puer: Bild + Wuert.';
+  setFeedback('');
+
+  let html = '<div class="memoryGrid">';
+  memoryState.cards.forEach(card=>{
+    let inner = '<div class="back">?</div>';
+
+    if(card.open || card.matched){
+      if(card.type === 'img'){
+        inner = `<img src="${card.content}" alt="${card.label}">`;
+      }else{
+        inner = `<div>${card.content}</div>`;
+      }
+    }
+
+    html += `
+      <button class="memoryCard ${card.matched ? 'matched' : ''}" data-uid="${card.uid}">
+        ${inner}
+      </button>
+    `;
+  });
+  html += '</div>';
+
+  gameArea.innerHTML = html;
+
+  gameArea.querySelectorAll('.memoryCard').forEach(btn=>{
+    btn.onclick = ()=>{
+      const uid = Number(btn.dataset.uid);
+      const card = memoryState.cards.find(c => c.uid === uid);
+      if(!card || card.open || card.matched || memoryState.lock) return;
+
+      card.open = true;
+      if(card.type === 'word'){
+        playAudio(card.audio);
+      }
+
+      if(memoryState.first === null){
+        memoryState.first = uid;
+        renderMemoryGame();
+        return;
+      }
+
+      memoryState.second = uid;
+      memoryState.lock = true;
+      renderMemoryGame();
+
+      const firstCard = memoryState.cards.find(c => c.uid === memoryState.first);
+      const secondCard = memoryState.cards.find(c => c.uid === memoryState.second);
+
+      if(firstCard.pair === secondCard.pair){
+        setFeedback('Bravo!', 'good');
+        setTimeout(()=>{
+          firstCard.matched = true;
+          secondCard.matched = true;
+          firstCard.open = true;
+          secondCard.open = true;
+          memoryState.first = null;
+          memoryState.second = null;
+          memoryState.lock = false;
+          memoryState.matches++;
+
+          if(memoryState.matches === memoryState.cards.length / 2){
+            instructions.textContent = 'Bravo!';
+            gameArea.innerHTML = '<div class="endBox">Du hues Spill 2 fäerdeg. Klick op de Pfeil no riets fir dat nächst Spill.</div>';
+            setFeedback('Fäerdeg!', 'good');
+          }else{
+            renderMemoryGame();
+          }
+        }, 500);
+      }else{
+        setFeedback('Dat passt net.', 'bad');
+        setTimeout(()=>{
+          firstCard.open = false;
+          secondCard.open = false;
+          memoryState.first = null;
+          memoryState.second = null;
+          memoryState.lock = false;
+          renderMemoryGame();
+        }, 850);
+      }
+    };
+  });
+}
+
+function initSentenceGame(){
+  const prompts = BUILD_SENTENCES.map(tokens=>{
+    const allWords = [...new Set(BUILD_SENTENCES.flat().filter(t => !['.'].includes(t)))];
+    const coreWords = tokens.filter(t => !['.'].includes(t));
+    const distractors = shuffle(allWords.filter(w => !coreWords.includes(w))).slice(0,2);
+    return {
+      correct:tokens,
+      options:shuffle([...tokens, ...distractors])
+    };
+  });
+
+  sentenceState = {
+    prompts:shuffle(prompts),
+    index:0,
+    placed:[]
+  };
+}
+
+function renderSentenceGame(){
+  if(!sentenceState.prompts || !sentenceState.prompts.length){
+    initSentenceGame();
+  }
+
+  const prompt = sentenceState.prompts[sentenceState.index];
+  instructions.textContent = 'Bau de richtege Saz.';
+  setFeedback('');
+
+  let html = '<div class="centerBox" style="margin-bottom:14px;">' +
+             (sentenceState.index + 1) + ' / ' + sentenceState.prompts.length +
+             '</div>';
+
+  html += '<div class="sentenceSlots" id="slots">';
+  prompt.correct.forEach((token, idx)=>{
+    const placed = sentenceState.placed[idx] || '';
+    html += `
+      <button class="slotBtn" data-slot="${idx}">
+        ${placed || '...'}
+      </button>
+    `;
+  });
+  html += '</div>';
+
+  html += '<div style="height:14px;"></div>';
+  html += '<div class="tokenPool">';
+
+  prompt.options.forEach((token, idx)=>{
+    const usedCount = sentenceState.placed.filter(x => x === token).length;
+    const totalAvailable = prompt.options.filter(x => x === token).length;
+    if(usedCount < totalAvailable){
+      html += `
+        <button class="tileBtn" data-token="${token}" data-index="${idx}">
+          ${token}
+        </button>
+      `;
+    }
+  });
+
+  html += '</div>';
+
+  gameArea.innerHTML = html;
+
+  gameArea.querySelectorAll('.tileBtn').forEach(btn=>{
+    btn.onclick = ()=>{
+      const token = btn.dataset.token;
+      const firstEmpty = sentenceState.placed.findIndex(x => !x);
+      if(firstEmpty === -1){
+        sentenceState.placed.push(token);
+      }else{
+        sentenceState.placed[firstEmpty] = token;
+      }
+
+      while(sentenceState.placed.length < prompt.correct.length){
+        sentenceState.placed.push('');
+      }
+
+      renderSentenceGame();
+      checkSentence();
+    };
+  });
+
+  gameArea.querySelectorAll('.slotBtn').forEach(btn=>{
+    btn.onclick = ()=>{
+      const slot = Number(btn.dataset.slot);
+      sentenceState.placed[slot] = '';
+      renderSentenceGame();
+    };
+  });
+
+  while(sentenceState.placed.length < prompt.correct.length){
+    sentenceState.placed.push('');
+  }
+}
+
+function checkSentence(){
+  const prompt = sentenceState.prompts[sentenceState.index];
+  if(sentenceState.placed.some(x => !x)) return;
+
+  const ok = prompt.correct.every((token, idx)=>token === sentenceState.placed[idx]);
+
+  if(ok){
+    setFeedback('Richteg!', 'good');
+    setTimeout(()=>{
+      if(sentenceState.index < sentenceState.prompts.length - 1){
+        sentenceState.index++;
+        sentenceState.placed = [];
+        renderSentenceGame();
+      }else{
+        instructions.textContent = 'Bravo!';
+        gameArea.innerHTML = '<div class="endBox">Du hues Spill 3 fäerdeg. Klick op de Pfeil no riets fir dat nächst Spill.</div>';
+        setFeedback('Fäerdeg!', 'good');
+      }
+    }, 700);
+  }else{
+    setFeedback('Kuck nach eng Kéier.', 'bad');
+  }
+}
+
+function initQuizGame(){
+  quizState = {
+    questions:shuffle(QUIZ_QUESTIONS),
+    index:0
+  };
+}
+
+function renderQuizGame(){
+  if(!quizState.questions || !quizState.questions.length){
+    initQuizGame();
+  }
+
+  const q = quizState.questions[quizState.index];
+  instructions.textContent = q.prompt;
+  setFeedback('');
+  locked = false;
+
+  let html = '<div class="centerBox" style="margin-bottom:14px;">' +
+             (quizState.index + 1) + ' / ' + quizState.questions.length +
+             '</div>';
+
+  if(q.img){
+    html += `<img class="quizImage" src="${q.img}" alt="">`;
+  }
+
+  html += '<div class="quizOptions">';
+  q.options.forEach((opt, idx)=>{
+    html += `
+      <button class="quizBtn" data-index="${idx}">
+        ${opt}
+      </button>
+    `;
+  });
+  html += '</div>';
+
+  gameArea.innerHTML = html;
+
+  gameArea.querySelectorAll('.quizBtn').forEach(btn=>{
+    btn.onclick = ()=>{
+      if(locked) return;
+      const idx = Number(btn.dataset.index);
+      if(idx === q.correctIndex){
+        locked = true;
+        btn.classList.add('good');
+        setFeedback('Richteg!', 'good');
+        setTimeout(()=>{
+          if(quizState.index < quizState.questions.length - 1){
+            quizState.index++;
+            renderQuizGame();
+          }else{
+            instructions.textContent = 'Bravo!';
+            gameArea.innerHTML = '<div class="endBox">Du hues Spill 4 fäerdeg. Klick op de Pfeil no riets fir dat nächst Spill.</div>';
+            setFeedback('Fäerdeg!', 'good');
+          }
+        }, 700);
+      }else{
+        btn.classList.add('bad');
+        setFeedback('Dat ass net richteg.', 'bad');
+        setTimeout(()=>{
+          btn.classList.remove('bad');
+          setFeedback('');
+        }, 500);
+      }
+    };
+  });
+}
+
+function initSortGame(){
+  sortState = {
+    items:shuffle([
+      ITEMS.find(x => x.id === 'bauer'),
+      ITEMS.find(x => x.id === 'kou'),
+      ITEMS.find(x => x.id === 'hong'),
+      ITEMS.find(x => x.id === 'iesel'),
+      ITEMS.find(x => x.id === 'jippelchen'),
+      ITEMS.find(x => x.id === 'lammchen')
+    ]),
+    placed:{
+      persoun:[],
+      'déier':[],
+      'bébé':[]
+    },
+    activeId:null
+  };
+}
+
+function renderSortGame(){
+  if(!sortState.items || !sortState.items.length){
+    initSortGame();
+  }
+
+  instructions.textContent = 'Sortéier an déi richteg Kategorie.';
+  setFeedback('');
+
+  let html = '<div class="sortWrap">';
+  html += '<div class="poolWrap">';
+
+  sortState.items.forEach(item=>{
+    html += `
+      <button class="poolItem ${sortState.activeId === item.id ? 'good' : ''}" data-id="${item.id}">
+        <img src="${item.img}" alt="${item.word}">
+        <div>${item.word}</div>
+      </button>
+    `;
+  });
+
+  html += '</div>';
+  html += '<div class="columns">';
+
+  SORT_CATEGORIES.forEach(cat=>{
+    html += `
+      <div class="column">
+        <h3 class="columnTitle">${cat.label}</h3>
+        <div class="columnItems">
+          ${sortState.placed[cat.id].map(item => `
+            <div class="poolItem good">
+              <img src="${item.img}" alt="${item.word}">
+              <div>${item.word}</div>
+            </div>
+          `).join('')}
+        </div>
+        <div style="height:10px;"></div>
+        <button class="catBtn" data-cat="${cat.id}">Hei setzen</button>
+      </div>
+    `;
+  });
+
+  html += '</div>';
+  html += '</div>';
+
+  gameArea.innerHTML = html;
+
+  gameArea.querySelectorAll('.poolItem[data-id]').forEach(btn=>{
+    btn.onclick = ()=>{
+      sortState.activeId = btn.dataset.id;
+      renderSortGame();
+    };
+  });
+
+  gameArea.querySelectorAll('.catBtn').forEach(btn=>{
+    btn.onclick = ()=>{
+      if(!sortState.activeId) return;
+      const item = sortState.items.find(x => x.id === sortState.activeId);
+      const cat = btn.dataset.cat;
+
+      if(item.cat === cat){
+        sortState.placed[cat].push(item);
+        sortState.items = sortState.items.filter(x => x.id !== item.id);
+        sortState.activeId = null;
+        setFeedback('Richteg!', 'good');
+
+        if(sortState.items.length === 0){
+          instructions.textContent = 'Bravo!';
+          gameArea.innerHTML = '<div class="endBox">Du hues all d'Spiller fäerdeg. Klick op ↻ fir nach eng Kéier ze spillen.</div>';
+          setFeedback('Fäerdeg!', 'good');
+        }else{
+          renderSortGame();
+        }
+      }else{
+        setFeedback('Dat passt net an déi Kategorie.', 'bad');
+      }
+    };
+  });
+}
+
+function renderCurrentGame(){
+  stopAudio();
+  updateTopBar();
+
+  if(currentGame === 0){
+    renderListenGame();
+  }
+
+  if(currentGame === 1){
+    renderMemoryGame();
+  }
+
+  if(currentGame === 2){
+    renderSentenceGame();
+  }
+
+  if(currentGame === 3){
+    renderQuizGame();
+  }
+
+  if(currentGame === 4){
+    renderSortGame();
+  }
+}
+
+function replayCurrentGame(){
+  if(currentGame === 0){
+    initListenGame();
+  }
+
+  if(currentGame === 1){
+    initMemoryGame();
+  }
+
+  if(currentGame === 2){
+    initSentenceGame();
+  }
+
+  if(currentGame === 3){
+    initQuizGame();
+  }
+
+  if(currentGame === 4){
+    initSortGame();
+  }
+
+  renderCurrentGame();
+}
+
+function playCurrentGameAudio(){
+  if(currentGame === 0){
+    const item = listenState.order[listenState.index];
+    if(item){
+      playAudio(item.audio);
+    }
+  }
+
+  if(currentGame === 3){
+    const q = quizState.questions[quizState.index];
+    if(q && q.audio){
+      playAudio(q.audio);
+    }
+  }
+}
+
+document.getElementById('prev').onclick = ()=>{
+  if(currentGame === 0) return;
+  currentGame--;
+  renderCurrentGame();
+};
+
+document.getElementById('next').onclick = ()=>{
+  if(currentGame === GAME_TITLES.length - 1) return;
+  currentGame++;
+  renderCurrentGame();
+};
+
+document.getElementById('play').onclick = ()=>{
+  if(currentGame === 1 || currentGame === 2 || currentGame === 4) return;
+  playCurrentGameAudio();
+};
+
+document.getElementById('replay').onclick = ()=>{
+  replayCurrentGame();
+};
+
+initListenGame();
+initMemoryGame();
+initSentenceGame();
+initQuizGame();
+initSortGame();
+renderCurrentGame();
+</script>
+
+</body>
+</html>
