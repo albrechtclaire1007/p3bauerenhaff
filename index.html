@@ -1,706 +1,859 @@
-<!DOCTYPE html>
-<html lang="lb">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<title>P3 – Bauerenhaff</title>
+diff --git a/index.html b/index.html
+index 3d12db94deefdcb7780fc69920f633e077c88f22..7f37d98e2403591ebd82b8774f43a4384ae1d1c9 100644
+--- a/index.html
++++ b/index.html
+@@ -1,706 +1,344 @@
+ <!DOCTYPE html>
+ <html lang="lb">
+ <head>
+ <meta charset="utf-8"/>
+ <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+ <title>P3 – Bauerenhaff</title>
+ 
+ <style>
+ @font-face{
+   font-family:'Schoulschrëft';
+   src:url('https://raw.githubusercontent.com/albrechtclaire1007/schoulschreft/main/schoulschreft_bold%5B2%5D.TTF') format('truetype');
+   font-weight:bold;
+   font-style:normal;
+   font-display:swap;
+ }
+ 
+ :root{
+-  /* P3 light blue background */
+   --bg1:#E7F5FF;
+   --bg2:#CFEAFF;
+-
+-  /* bar + accents */
+   --bar:#6FAFE6;
+   --barBorder:#4D90CD;
+-
+   --ink:#1f1f1f;
+   --white:#fff;
+   --border:3px;
+   --shadow:0 10px 24px rgba(0,0,0,.08);
+   --pad:clamp(10px,2.2vw,16px);
+   --r:18px;
+-
+-  /* icons */
+-  --iconArrow:"https://i.postimg.cc/QBYTSN08/p3arrow.png";
+-  --iconPlay:"https://i.postimg.cc/ZB9yQkMt/p3play.png";
+-  --iconReplay:"https://i.postimg.cc/ft30P4rQ/p3replay.png";
+-
+-  --good:#b8efc8;
+-  --bad:#ffd6d6;
+   --line:#d7e8f7;
+   --soft:#ffffff;
++  --good:#b8efc8;
++  --bad:#ffd6d6;
++  --cardBack:"https://i.postimg.cc/vHSHcbN9/cardback-p3.png";
+ }
+ 
+-*{
+-  box-sizing:border-box;
+-  -webkit-tap-highlight-color:transparent;
+-  user-select:none;
+-  outline:none;
+-}
+-
+-html,body{
+-  height:100%;
+-  margin:0;
+-  background:linear-gradient(135deg,var(--bg2),var(--bg1));
+-  color:var(--ink);
+-  font-family:'Schoulschrëft', Arial, sans-serif;
+-}
+-
+-.hidden{
+-  display:none!important;
+-}
++*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;outline:none;}
++html,body{height:100%;margin:0;background:linear-gradient(135deg,var(--bg2),var(--bg1));color:var(--ink);font-family:'Schoulschrëft', Arial, sans-serif;}
+ 
+-/* ===== TOP BAR (everything inside) ===== */
+ .topBar{
+   position:sticky;
+   top:10px;
+   z-index:10;
+   width:min(1200px,96vw);
+   margin:10px auto 0;
+   background:var(--bar);
+   border:var(--border) solid var(--barBorder);
+   border-radius:999px;
+   box-shadow:var(--shadow);
+   padding:10px 12px;
+   display:grid;
+   grid-template-columns:70px 1fr auto;
+   align-items:center;
+   gap:10px;
+ }
+ 
+-.barBtn{
+-  border:none;
+-  background:transparent;
+-  cursor:pointer;
+-  display:grid;
+-  place-items:center;
+-  width:54px;
+-  height:54px;
+-}
+-
+-.barBtn:active{
+-  transform:scale(.98);
+-}
+-
+-.barBtn img{
+-  width:46px;
+-  height:46px;
+-  object-fit:contain;
+-}
+-
+-.barBtn.back img{
+-  transform:rotate(180deg);
+-}
+-
+-.barTitle{
+-  text-align:center;
+-  color:#fff;
+-  font-size:clamp(1.5rem,3.2vw,2.4rem);
+-  margin:0;
+-  line-height:1.1;
+-  padding:0 6px;
+-}
+-
+-.barRight{
+-  display:flex;
+-  align-items:center;
+-  gap:6px;
+-}
+-
+-.barRight .barBtn{
+-  width:50px;
+-  height:50px;
+-}
+-
+-.barRight .barBtn img{
+-  width:42px;
+-  height:42px;
+-}
+-
+-/* ===== CONTENT ===== */
+-.wrap{
+-  width:min(1200px,96vw);
+-  margin:18px auto 26px;
+-  padding:var(--pad);
+-  display:flex;
+-  flex-direction:column;
+-  gap:14px;
+-}
+-
+-.card{
+-  background:rgba(255,255,255,.8);
+-  border:var(--border) solid rgba(255,255,255,.65);
+-  border-radius:var(--r);
+-  box-shadow:var(--shadow);
+-  padding:clamp(12px,2.2vw,18px);
+-}
+-
+-.cardTitle{
+-  margin:0 0 8px 0;
+-  font-size:clamp(1.1rem,2.2vw,1.5rem);
+-  opacity:.9;
+-}
+-
+-.placeholder{
+-  border:3px dashed rgba(0,0,0,.2);
+-  border-radius:14px;
+-  padding:18px;
+-  background:rgba(255,255,255,.55);
+-  font-size:1.05rem;
+-  opacity:.85;
+-}
+-
+-/* ===== GAME UI ===== */
+-.topRow{
+-  display:flex;
+-  justify-content:space-between;
+-  align-items:center;
+-  gap:10px;
+-  flex-wrap:wrap;
+-  margin-bottom:10px;
+-}
+-
+-.pill{
+-  background:#fff;
+-  border:3px solid var(--line);
+-  border-radius:999px;
+-  padding:8px 14px;
+-  font-size:clamp(.95rem,1.8vw,1.1rem);
+-}
+-
+-.instructions{
+-  text-align:center;
+-  font-size:clamp(1rem,2vw,1.2rem);
+-  min-height:28px;
+-  margin-bottom:10px;
+-}
+-
+-.feedback{
+-  text-align:center;
+-  font-size:clamp(1rem,2vw,1.2rem);
+-  min-height:30px;
+-  margin-bottom:12px;
+-}
+-
+-.feedback.good{
+-  color:#1f7c42;
+-}
+-
+-.feedback.bad{
+-  color:#b53b3b;
+-}
+-
+-.centerBox{
+-  border:3px dashed var(--line);
+-  border-radius:16px;
+-  background:rgba(255,255,255,.55);
+-  padding:14px;
+-  text-align:center;
+-  margin-bottom:14px;
+-  font-size:clamp(1rem,2vw,1.15rem);
+-}
+-
+-.choiceGrid{
+-  display:grid;
+-  grid-template-columns:repeat(2,minmax(0,1fr));
+-  gap:14px;
+-}
+-
+-.choiceBtn{
+-  border:3px solid var(--line);
+-  border-radius:18px;
+-  background:var(--soft);
+-  box-shadow:var(--shadow);
+-  padding:12px;
+-  cursor:pointer;
+-  font-family:'Schoulschrëft', Arial, sans-serif;
+-  color:var(--ink);
+-}
+-
+-.choiceBtn:active{
+-  transform:scale(.98);
+-}
+-
+-.choiceBtn img{
+-  width:100%;
+-  max-width:220px;
+-  max-height:150px;
+-  object-fit:contain;
+-  display:block;
+-  margin:0 auto 8px auto;
+-}
+-
+-.choiceLabel{
+-  text-align:center;
+-  font-size:clamp(1rem,2vw,1.2rem);
+-}
+-
+-.good{
+-  background:var(--good)!important;
+-}
+-
+-.bad{
+-  background:var(--bad)!important;
+-}
+-
+-.memoryGrid{
+-  display:grid;
+-  grid-template-columns:repeat(4,minmax(0,1fr));
+-  gap:12px;
+-}
+-
+-.memoryCard{
+-  min-height:120px;
+-  border:3px solid var(--line);
+-  border-radius:18px;
+-  background:var(--soft);
+-  box-shadow:var(--shadow);
+-  cursor:pointer;
+-  display:flex;
+-  align-items:center;
+-  justify-content:center;
+-  text-align:center;
+-  padding:8px;
+-  font-family:'Schoulschrëft', Arial, sans-serif;
+-  color:var(--ink);
+-}
+-
+-.memoryCard:active{
+-  transform:scale(.98);
+-}
+-
+-.memoryCard img{
+-  width:100%;
+-  max-width:110px;
+-  max-height:85px;
+-  object-fit:contain;
+-}
+-
+-.memoryBack{
+-  font-size:2rem;
+-}
+-
+-.doneBox{
+-  border:3px dashed var(--line);
+-  border-radius:16px;
+-  background:rgba(255,255,255,.55);
+-  padding:24px 16px;
+-  text-align:center;
+-  font-size:clamp(1.1rem,2.4vw,1.35rem);
+-}
++.barBtn{border:none;background:transparent;cursor:pointer;display:grid;place-items:center;width:54px;height:54px;}
++.barBtn:active{transform:scale(.98);}
++.barBtn img{width:46px;height:46px;object-fit:contain;}
++.barBtn.back img{transform:rotate(180deg);}
++.barTitle{visibility:hidden;height:0;margin:0;}
++.barRight{display:flex;align-items:center;gap:6px;}
++.barRight .barBtn{width:50px;height:50px;}
++.barRight .barBtn img{width:42px;height:42px;}
++
++.wrap{width:min(1200px,96vw);margin:18px auto 26px;padding:var(--pad);}
++.card{background:rgba(255,255,255,.8);border:var(--border) solid rgba(255,255,255,.65);border-radius:var(--r);box-shadow:var(--shadow);padding:clamp(12px,2.2vw,18px);}
++
++.choiceGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
++.choiceBtn{border:3px solid var(--line);border-radius:18px;background:var(--soft);box-shadow:var(--shadow);padding:12px;cursor:pointer;}
++.choiceBtn:active{transform:scale(.98);}
++.choiceBtn img{width:100%;max-width:220px;max-height:150px;object-fit:contain;display:block;margin:0 auto;}
++
++.memoryGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;}
++.memoryCard{min-height:120px;border:3px solid var(--line);border-radius:18px;background:var(--soft);box-shadow:var(--shadow);cursor:pointer;display:flex;align-items:center;justify-content:center;text-align:center;padding:8px;color:var(--ink);}
++.memoryCard:active{transform:scale(.98);}
++.memoryCard img{width:100%;max-width:110px;max-height:85px;object-fit:contain;}
++.memoryCard.back{background-image:var(--cardBack);background-size:cover;background-position:center;}
++.memoryCard.back img{display:none;}
++
++.pluralWrap{display:flex;flex-direction:column;gap:14px;}
++.pluralPrompt{display:grid;place-items:center;padding:8px;}
++.pluralPrompt img{width:100%;max-width:230px;max-height:180px;object-fit:contain;}
++.pluralChoices{display:grid;grid-template-columns:1fr;gap:10px;}
++.pluralBtn{border:3px solid var(--line);border-radius:14px;background:#fff;padding:12px;cursor:pointer;font-family:'Schoulschrëft', Arial, sans-serif;font-size:clamp(1.2rem,2.7vw,1.8rem);}
++.pluralBtn.good{background:var(--good);}
++.pluralBtn.bad{background:var(--bad);}
+ 
+ @media (max-width:760px){
+-  .choiceGrid{
+-    grid-template-columns:1fr;
+-  }
+-
+-  .memoryGrid{
+-    grid-template-columns:repeat(3,minmax(0,1fr));
+-  }
++  .choiceGrid{grid-template-columns:1fr;}
++  .memoryGrid{grid-template-columns:repeat(3,minmax(0,1fr));}
+ }
+-
+ @media (max-width:520px){
+-  .memoryGrid{
+-    grid-template-columns:repeat(2,minmax(0,1fr));
+-  }
++  .memoryGrid{grid-template-columns:repeat(2,minmax(0,1fr));}
+ }
+ </style>
+ </head>
+ 
+ <body>
+-
+ <div class="topBar">
+-  <button class="barBtn back" id="prev" aria-label="Virdrun">
+-    <img src="https://i.postimg.cc/QBYTSN08/p3arrow.png" alt="">
+-  </button>
+-
+-  <h1 class="barTitle" id="gameTitle">P3 – Lauschter a klick</h1>
+-
++  <button class="barBtn back" id="prev" aria-label="Virdrun"><img src="https://i.postimg.cc/QBYTSN08/p3arrow.png" alt=""></button>
++  <h1 class="barTitle" id="gameTitle">.</h1>
+   <div class="barRight">
+-    <button class="barBtn" id="play" aria-label="Play">
+-      <img src="https://i.postimg.cc/ZB9yQkMt/p3play.png" alt="">
+-    </button>
+-    <button class="barBtn" id="replay" aria-label="Replay">
+-      <img src="https://i.postimg.cc/ft30P4rQ/p3replay.png" alt="">
+-    </button>
+-    <button class="barBtn" id="next" aria-label="Nächst">
+-      <img src="https://i.postimg.cc/QBYTSN08/p3arrow.png" alt="">
+-    </button>
++    <button class="barBtn" id="play" aria-label="Play"><img src="https://i.postimg.cc/ZB9yQkMt/p3play.png" alt=""></button>
++    <button class="barBtn" id="replay" aria-label="Replay"><img src="https://i.postimg.cc/ft30P4rQ/p3replay.png" alt=""></button>
++    <button class="barBtn" id="next" aria-label="Nächst"><img src="https://i.postimg.cc/QBYTSN08/p3arrow.png" alt=""></button>
+   </div>
+ </div>
+ 
+-<div class="wrap">
+-  <div class="card">
+-    <div class="topRow">
+-      <p class="cardTitle" id="cardTitle">Spill 1</p>
+-      <div class="pill" id="gameCount">1 / 2</div>
+-    </div>
+-
+-    <div class="instructions" id="instructions"></div>
+-    <div class="feedback" id="feedback"></div>
+-    <div id="gameArea"></div>
+-  </div>
+-</div>
++<div class="wrap"><div class="card"><div id="gameArea"></div></div></div>
+ 
+ <script>
+ const AUDIO_BASE = 'https://github.com/albrechtclaire1007/p3bauerenhaff/raw/refs/heads/main/';
+ 
+ const ITEMS = [
+-  { id:'bauer', word:'de Bauer', img:'https://i.postimg.cc/Z0dNtv6g/bauer.png', audio:'BAUER.mp3' },
+-  { id:'gees', word:'d’Gees', img:'https://i.postimg.cc/PC7Nc6pp/gees.png', audio:'GEESS.mp3' },
+-  { id:'fierkel', word:'d’Fierkel', img:'https://i.postimg.cc/FdjhGvJw/fiekel.png', audio:'FIERKEL.mp3' },
+-  { id:'fillen', word:'de Fillen', img:'https://i.postimg.cc/5YwfpJCW/fillen.png', audio:'FILLEN.mp3' },
+-  { id:'hong', word:'den Hong', img:'https://i.postimg.cc/R3nqzcwC/hong.png', audio:'HONG.mp3' },
+-  { id:'iesel', word:'den Iesel', img:'https://i.postimg.cc/R3nqzcwx/iesel.png', audio:'IESEL.mp3' },
+-  { id:'int', word:'d’Int', img:'https://i.postimg.cc/8FrsVhLP/int.png', audio:'INT.mp3' },
+-  { id:'jippelchen', word:'d’Jippelchen', img:'https://i.postimg.cc/phbrVpBN/jippelchen.png', audio:'JIPPELCHEN.mp3' },
+-  { id:'kallef', word:'d’Kallef', img:'https://i.postimg.cc/R65hCNTZ/kallef.png', audio:'KALLEF.mp3' },
+-  { id:'kou', word:'d’Kou', img:'https://i.postimg.cc/Fd5zF7xR/kou.png', audio:'KOU.mp3' },
+-  { id:'lammchen', word:'d’Lämmchen', img:'https://i.postimg.cc/zbZvDVkR/lammchen.png', audio:'LAMMCHEN.mp3' },
+-  { id:'paerd', word:'d’Päerd', img:'https://i.postimg.cc/R67FW4Ps/paerd.png', audio:'PAERD.mp3' },
+-  { id:'schof', word:'d’Schof', img:'https://i.postimg.cc/jwH5Dt89/schof.png', audio:'SCHOF.mp3' }
++  { id:'bauer', singular:'de Bauer', plural:'zwee Baueren', img:'https://i.postimg.cc/Z0dNtv6g/bauer.png', audio:'BAUER.mp3' },
++  { id:'gees', singular:'d’Gees', plural:'zwou Geessen', img:'https://i.postimg.cc/PC7Nc6pp/gees.png', audio:'GEESS.mp3' },
++  { id:'fierkel', singular:'d’Fierkel', plural:'zwee Fierkelen', img:'https://i.postimg.cc/FdjhGvJw/fiekel.png', audio:'FIERKEL.mp3' },
++  { id:'fillen', singular:'de Fillen', plural:'zwee Fillen', img:'https://i.postimg.cc/5YwfpJCW/fillen.png', audio:'FILLEN.mp3' },
++  { id:'hong', singular:'den Hong', plural:'zwee Hénger', img:'https://i.postimg.cc/R3nqzcwC/hong.png', audio:'HONG.mp3' },
++  { id:'iesel', singular:'den Iesel', plural:'zwee Ieselen', img:'https://i.postimg.cc/R3nqzcwx/iesel.png', audio:'IESEL.mp3' },
++  { id:'int', singular:'d’Int', plural:'zwou Inten', img:'https://i.postimg.cc/8FrsVhLP/int.png', audio:'INT.mp3' },
++  { id:'jippelchen', singular:'d’Jippelchen', plural:'zwee Jippelcher', img:'https://i.postimg.cc/phbrVpBN/jippelchen.png', audio:'JIPPELCHEN.mp3' },
++  { id:'kallef', singular:'d’Kallef', plural:'zwee Källef', img:'https://i.postimg.cc/R65hCNTZ/kallef.png', audio:'KALLEF.mp3' },
++  { id:'kou', singular:'d’Kou', plural:'zwou Kéi', img:'https://i.postimg.cc/Fd5zF7xR/kou.png', audio:'KOU.mp3' },
++  { id:'lammchen', singular:'d’Lämmchen', plural:'zwee Lämmercher', img:'https://i.postimg.cc/zbZvDVkR/lammchen.png', audio:'LAMMCHEN.mp3' },
++  { id:'paerd', singular:'d’Päerd', plural:'zwee Päerd', img:'https://i.postimg.cc/R67FW4Ps/paerd.png', audio:'PAERD.mp3' },
++  { id:'schof', singular:'d’Schof', plural:'zwee Schof', img:'https://i.postimg.cc/jwH5Dt89/schof.png', audio:'SCHOF.mp3' },
++  { id:'schwain', singular:'d’Schwäin', plural:'zwee Schwäin', img:'https://i.postimg.cc/ZqCrfXHF/schwain.png', audio:'SCHWAIN.mp3' }
+ ];
+ 
+-const GAME_TITLES = [
+-  'P3 – Lauschter a klick',
+-  'P3 – Memory'
+-];
+-
+-const memoryBaseItems = [
+-  ITEMS.find(x => x.id === 'bauer'),
+-  ITEMS.find(x => x.id === 'kou'),
+-  ITEMS.find(x => x.id === 'hong'),
+-  ITEMS.find(x => x.id === 'int'),
+-  ITEMS.find(x => x.id === 'paerd'),
+-  ITEMS.find(x => x.id === 'schof')
+-];
++const GAME_TITLES = ['','',''];
+ 
+-const gameTitle = document.getElementById('gameTitle');
+-const cardTitle = document.getElementById('cardTitle');
+-const gameCount = document.getElementById('gameCount');
+-const instructions = document.getElementById('instructions');
+-const feedback = document.getElementById('feedback');
+ const gameArea = document.getElementById('gameArea');
+ const prevBtn = document.getElementById('prev');
+ const nextBtn = document.getElementById('next');
+ const playBtn = document.getElementById('play');
+ 
+ let currentGame = 0;
+ let audio = null;
+ 
+-/* ===== GAME 1 STATE ===== */
+ let listenOrder = [];
+ let listenIndex = 0;
+ let listenLocked = false;
+ 
+-/* ===== GAME 2 STATE ===== */
+ let memoryCards = [];
+ let memoryFirst = null;
+ let memorySecond = null;
+ let memoryLocked = false;
+-let memoryMatches = 0;
++
++let pluralOrder = [];
++let pluralIndex = 0;
++let pluralLocked = false;
+ 
+ function shuffle(arr){
+   const a = [...arr];
+   for(let i = a.length - 1; i > 0; i--){
+     const j = Math.floor(Math.random() * (i + 1));
+     [a[i], a[j]] = [a[j], a[i]];
+   }
+   return a;
+ }
+ 
+-function setFeedback(text, cls){
+-  feedback.textContent = text || '';
+-  feedback.className = 'feedback' + (cls ? ' ' + cls : '');
+-}
+-
+-function stopAudio(){
+-  if(audio){
+-    audio.pause();
+-    audio.currentTime = 0;
+-  }
+-}
+-
+-function playAudio(file){
+-  stopAudio();
+-  audio = new Audio(AUDIO_BASE + file);
+-  audio.play().catch(()=>{});
+-}
++function stopAudio(){if(audio){audio.pause();audio.currentTime = 0;}}
++function playAudio(file){stopAudio();audio = new Audio(AUDIO_BASE + file);audio.play().catch(()=>{});}
+ 
+ function updateTopBar(){
+-  gameTitle.textContent = GAME_TITLES[currentGame];
+-  cardTitle.textContent = 'Spill ' + (currentGame + 1);
+-  gameCount.textContent = (currentGame + 1) + ' / ' + GAME_TITLES.length;
+   prevBtn.style.opacity = currentGame === 0 ? '.45' : '1';
+   nextBtn.style.opacity = currentGame === GAME_TITLES.length - 1 ? '.45' : '1';
+   playBtn.style.opacity = currentGame === 0 ? '1' : '.45';
+ }
+ 
+-/* ===== GAME 1 ===== */
+-function initListenGame(){
+-  listenOrder = shuffle(ITEMS);
+-  listenIndex = 0;
+-  listenLocked = false;
+-}
+-
+-function currentListenItem(){
+-  return listenOrder[listenIndex];
+-}
++function initListenGame(){listenOrder = shuffle(ITEMS);listenIndex = 0;listenLocked = false;}
++function currentListenItem(){return listenOrder[listenIndex];}
+ 
+ function renderListenGame(){
+   const item = currentListenItem();
++  if(!item){gameArea.innerHTML='';return;}
+ 
+-  if(!item){
+-    instructions.textContent = 'Bravo!';
+-    setFeedback('Fäerdeg!', 'good');
+-    gameArea.innerHTML = '<div class="doneBox">Du hues Spill 1 fäerdeg. Klick op de Pfeil no riets fir Spill 2.</div>';
+-    return;
+-  }
+-
+-  instructions.textContent = 'Lauschter a klick op dat richtegt Bild.';
+-  setFeedback('', '');
+   listenLocked = false;
++  const choices = shuffle([item, ...shuffle(ITEMS.filter(x => x.id !== item.id)).slice(0, 3)]);
+ 
+-  const choices = shuffle([
+-    item,
+-    ...shuffle(ITEMS.filter(x => x.id !== item.id)).slice(0, 3)
+-  ]);
+-
+-  let html = '';
+-  html += '<div class="centerBox">' + (listenIndex + 1) + ' / ' + listenOrder.length + '</div>';
+-  html += '<div class="choiceGrid">';
+-
++  let html = '<div class="choiceGrid">';
+   choices.forEach(choice=>{
+-    html += `
+-      <button class="choiceBtn" data-id="${choice.id}">
+-        <img src="${choice.img}" alt="${choice.word}">
+-        <div class="choiceLabel">${choice.word}</div>
+-      </button>
+-    `;
++    html += `<button class="choiceBtn" data-id="${choice.id}"><img src="${choice.img}" alt=""></button>`;
+   });
+-
+   html += '</div>';
+   gameArea.innerHTML = html;
+ 
+-  const buttons = gameArea.querySelectorAll('.choiceBtn');
+-
+-  buttons.forEach(btn=>{
++  gameArea.querySelectorAll('.choiceBtn').forEach(btn=>{
+     btn.onclick = function(){
+       if(listenLocked) return;
+-
+       const pickedId = btn.getAttribute('data-id');
+-
+       if(pickedId === item.id){
+         listenLocked = true;
+         btn.classList.add('good');
+-        setFeedback('Richteg!', 'good');
+-
+-        setTimeout(function(){
+-          listenIndex++;
+-          renderListenGame();
+-        }, 700);
++        setTimeout(function(){listenIndex++;renderListenGame();}, 500);
+       }else{
+         btn.classList.add('bad');
+-        setFeedback('Nach eng Kéier probéieren.', 'bad');
+-
+-        setTimeout(function(){
+-          btn.classList.remove('bad');
+-          setFeedback('', '');
+-        }, 500);
++        setTimeout(function(){btn.classList.remove('bad');}, 350);
+       }
+     };
+   });
+ }
+ 
+-/* ===== GAME 2 ===== */
+ function initMemoryGame(){
+   const cards = [];
+-
+-  memoryBaseItems.forEach(item=>{
+-    cards.push({
+-      uid:'img-' + item.id,
+-      pair:item.id,
+-      type:'img',
+-      value:item.img,
+-      audio:item.audio,
+-      open:false,
+-      matched:false
+-    });
+-
+-    cards.push({
+-      uid:'word-' + item.id,
+-      pair:item.id,
+-      type:'word',
+-      value:item.word,
+-      audio:item.audio,
+-      open:false,
+-      matched:false
+-    });
++  ITEMS.forEach(item=>{
++    cards.push({uid:'a-' + item.id,pair:item.id,img:item.img,audio:item.audio,open:false,matched:false});
++    cards.push({uid:'b-' + item.id,pair:item.id,img:item.img,audio:item.audio,open:false,matched:false});
+   });
+-
+   memoryCards = shuffle(cards);
+   memoryFirst = null;
+   memorySecond = null;
+   memoryLocked = false;
+-  memoryMatches = 0;
+ }
+ 
+ function renderMemoryGame(){
+-  if(memoryMatches === memoryBaseItems.length){
+-    instructions.textContent = 'Bravo!';
+-    setFeedback('Fäerdeg!', 'good');
+-    gameArea.innerHTML = '<div class="doneBox">Du hues Spill 2 fäerdeg. Klick op ↻ fir nach eng Kéier ze spillen.</div>';
+-    return;
+-  }
+-
+-  instructions.textContent = 'Fann d’Puer: Bild + Wuert.';
+-  setFeedback('', '');
+-
+-  let html = '';
+-  html += '<div class="centerBox">' + memoryMatches + ' / ' + memoryBaseItems.length + '</div>';
+-  html += '<div class="memoryGrid">';
+-
++  let html = '<div class="memoryGrid">';
+   memoryCards.forEach(card=>{
+-    let inside = '<div class="memoryBack">?</div>';
+-
+-    if(card.open || card.matched){
+-      if(card.type === 'img'){
+-        inside = '<img src="' + card.value + '" alt="">';
+-      }else{
+-        inside = '<div>' + card.value + '</div>';
+-      }
+-    }
+-
+-    html += '<button class="memoryCard' + (card.matched ? ' good' : '') + '" data-uid="' + card.uid + '">' + inside + '</button>';
++    const isOpen = card.open || card.matched;
++    const inside = isOpen ? `<img src="${card.img}" alt="">` : '<img src="https://i.postimg.cc/vHSHcbN9/cardback-p3.png" alt="">';
++    html += `<button class="memoryCard ${isOpen ? '' : 'back'} ${card.matched ? 'good' : ''}" data-uid="${card.uid}">${inside}</button>`;
+   });
+-
+   html += '</div>';
+   gameArea.innerHTML = html;
+ 
+-  const buttons = gameArea.querySelectorAll('.memoryCard');
+-
+-  buttons.forEach(btn=>{
++  gameArea.querySelectorAll('.memoryCard').forEach(btn=>{
+     btn.onclick = function(){
+       if(memoryLocked) return;
+-
+-      const uid = btn.getAttribute('data-uid');
+-      const card = memoryCards.find(c => c.uid === uid);
+-
++      const card = memoryCards.find(c => c.uid === btn.getAttribute('data-uid'));
+       if(!card || card.open || card.matched) return;
+ 
+       card.open = true;
++      playAudio(card.audio);
+ 
+-      if(card.type === 'word'){
+-        playAudio(card.audio);
+-      }
+-
+-      if(memoryFirst === null){
+-        memoryFirst = card;
+-        renderMemoryGame();
+-        return;
+-      }
++      if(memoryFirst === null){memoryFirst = card;renderMemoryGame();return;}
+ 
+       memorySecond = card;
+       memoryLocked = true;
+       renderMemoryGame();
+ 
+       if(memoryFirst.pair === memorySecond.pair){
+-        setFeedback('Bravo!', 'good');
+-
+         setTimeout(function(){
+           memoryFirst.matched = true;
+           memorySecond.matched = true;
+           memoryFirst = null;
+           memorySecond = null;
+           memoryLocked = false;
+-          memoryMatches++;
+           renderMemoryGame();
+-        }, 550);
++        }, 450);
+       }else{
+-        setFeedback('Dat passt net.', 'bad');
+-
+         setTimeout(function(){
+           memoryFirst.open = false;
+           memorySecond.open = false;
+           memoryFirst = null;
+           memorySecond = null;
+           memoryLocked = false;
+           renderMemoryGame();
+-        }, 850);
++        }, 700);
++      }
++    };
++  });
++}
++
++function buildWrongPlurals(correct){
++  const base = correct.replace(/^zwee\s+|^zwou\s+/, '').trim();
++  const wrong1 = 'zwee ' + (base.endsWith('en') ? base.slice(0, -2) : (base + 'en'));
++  const wrong2 = 'zwee ' + (base.endsWith('er') ? (base + 'en') : (base + 'er'));
++  const dedup = Array.from(new Set([wrong1, wrong2].filter(x => x !== correct)));
++  while(dedup.length < 2){dedup.push('zwee ' + base + 's');}
++  return dedup.slice(0,2);
++}
++
++function initPluralGame(){
++  pluralOrder = shuffle(ITEMS.map(item=>{
++    const wrong = buildWrongPlurals(item.plural);
++    const options = shuffle([item.plural, ...wrong]);
++    return { ...item, options };
++  }));
++  pluralIndex = 0;
++  pluralLocked = false;
++}
++
++function renderPluralGame(){
++  const item = pluralOrder[pluralIndex];
++  if(!item){gameArea.innerHTML='';return;}
++
++  pluralLocked = false;
++  let html = '<div class="pluralWrap">';
++  html += `<div class="pluralPrompt"><img src="${item.img}" alt=""></div>`;
++  html += '<div class="pluralChoices">';
++  item.options.forEach(opt=>{html += `<button class="pluralBtn" data-value="${opt}">${opt}</button>`;});
++  html += '</div></div>';
++  gameArea.innerHTML = html;
++
++  gameArea.querySelectorAll('.pluralBtn').forEach(btn=>{
++    btn.onclick = function(){
++      if(pluralLocked) return;
++      const value = btn.getAttribute('data-value');
++      if(value === item.plural){
++        pluralLocked = true;
++        btn.classList.add('good');
++        setTimeout(function(){pluralIndex++;renderPluralGame();}, 550);
++      }else{
++        btn.classList.add('bad');
++        setTimeout(function(){btn.classList.remove('bad');}, 450);
+       }
+     };
+   });
+ }
+ 
+-/* ===== MAIN RENDER ===== */
+ function renderCurrentGame(){
+   stopAudio();
+   updateTopBar();
+-
+-  if(currentGame === 0){
+-    renderListenGame();
+-  }else{
+-    renderMemoryGame();
+-  }
++  if(currentGame === 0) renderListenGame();
++  else if(currentGame === 1) renderMemoryGame();
++  else renderPluralGame();
+ }
+ 
+ function replayCurrentGame(){
+   stopAudio();
+-
+-  if(currentGame === 0){
+-    initListenGame();
+-  }else{
+-    initMemoryGame();
+-  }
+-
++  if(currentGame === 0) initListenGame();
++  else if(currentGame === 1) initMemoryGame();
++  else initPluralGame();
+   renderCurrentGame();
+ }
+ 
+ function playCurrentGameAudio(){
+   if(currentGame !== 0) return;
+-
+   const item = currentListenItem();
+-  if(item){
+-    playAudio(item.audio);
+-  }
++  if(item) playAudio(item.audio);
+ }
+ 
+-/* ===== BUTTONS ===== */
+-document.getElementById('prev').onclick = function(){
+-  if(currentGame === 0) return;
+-  currentGame--;
+-  renderCurrentGame();
+-};
++prevBtn.onclick = function(){if(currentGame === 0) return;currentGame--;renderCurrentGame();};
++nextBtn.onclick = function(){if(currentGame === GAME_TITLES.length - 1) return;currentGame++;renderCurrentGame();};
++playBtn.onclick = function(){playCurrentGameAudio();};
++document.getElementById('replay').onclick = function(){replayCurrentGame();};
+ 
+-document.getElementById('next').onclick = function(){
+-  if(currentGame === GAME_TITLES.length - 1) return;
+-  currentGame++;
+-  renderCurrentGame();
+-};
+-
+-document.getElementById('play').onclick = function(){
+-  playCurrentGameAudio();
+-};
+-
+-document.getElementById('replay').onclick = function(){
+-  replayCurrentGame();
+-};
+-
+-/* ===== START ===== */
+ initListenGame();
+ initMemoryGame();
++initPluralGame();
+ renderCurrentGame();
+ </script>
+-
+ </body>
+ </html>
 
-<style>
-@font-face{
-  font-family:'Schoulschrëft';
-  src:url('https://raw.githubusercontent.com/albrechtclaire1007/schoulschreft/main/schoulschreft_bold%5B2%5D.TTF') format('truetype');
-  font-weight:bold;
-  font-style:normal;
-  font-display:swap;
-}
-
-:root{
-  /* P3 light blue background */
-  --bg1:#E7F5FF;
-  --bg2:#CFEAFF;
-
-  /* bar + accents */
-  --bar:#6FAFE6;
-  --barBorder:#4D90CD;
-
-  --ink:#1f1f1f;
-  --white:#fff;
-  --border:3px;
-  --shadow:0 10px 24px rgba(0,0,0,.08);
-  --pad:clamp(10px,2.2vw,16px);
-  --r:18px;
-
-  /* icons */
-  --iconArrow:"https://i.postimg.cc/QBYTSN08/p3arrow.png";
-  --iconPlay:"https://i.postimg.cc/ZB9yQkMt/p3play.png";
-  --iconReplay:"https://i.postimg.cc/ft30P4rQ/p3replay.png";
-
-  --good:#b8efc8;
-  --bad:#ffd6d6;
-  --line:#d7e8f7;
-  --soft:#ffffff;
-}
-
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-  user-select:none;
-  outline:none;
-}
-
-html,body{
-  height:100%;
-  margin:0;
-  background:linear-gradient(135deg,var(--bg2),var(--bg1));
-  color:var(--ink);
-  font-family:'Schoulschrëft', Arial, sans-serif;
-}
-
-.hidden{
-  display:none!important;
-}
-
-/* ===== TOP BAR (everything inside) ===== */
-.topBar{
-  position:sticky;
-  top:10px;
-  z-index:10;
-  width:min(1200px,96vw);
-  margin:10px auto 0;
-  background:var(--bar);
-  border:var(--border) solid var(--barBorder);
-  border-radius:999px;
-  box-shadow:var(--shadow);
-  padding:10px 12px;
-  display:grid;
-  grid-template-columns:70px 1fr auto;
-  align-items:center;
-  gap:10px;
-}
-
-.barBtn{
-  border:none;
-  background:transparent;
-  cursor:pointer;
-  display:grid;
-  place-items:center;
-  width:54px;
-  height:54px;
-}
-
-.barBtn:active{
-  transform:scale(.98);
-}
-
-.barBtn img{
-  width:46px;
-  height:46px;
-  object-fit:contain;
-}
-
-.barBtn.back img{
-  transform:rotate(180deg);
-}
-
-.barTitle{
-  text-align:center;
-  color:#fff;
-  font-size:clamp(1.5rem,3.2vw,2.4rem);
-  margin:0;
-  line-height:1.1;
-  padding:0 6px;
-}
-
-.barRight{
-  display:flex;
-  align-items:center;
-  gap:6px;
-}
-
-.barRight .barBtn{
-  width:50px;
-  height:50px;
-}
-
-.barRight .barBtn img{
-  width:42px;
-  height:42px;
-}
-
-/* ===== CONTENT ===== */
-.wrap{
-  width:min(1200px,96vw);
-  margin:18px auto 26px;
-  padding:var(--pad);
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-}
-
-.card{
-  background:rgba(255,255,255,.8);
-  border:var(--border) solid rgba(255,255,255,.65);
-  border-radius:var(--r);
-  box-shadow:var(--shadow);
-  padding:clamp(12px,2.2vw,18px);
-}
-
-.cardTitle{
-  margin:0 0 8px 0;
-  font-size:clamp(1.1rem,2.2vw,1.5rem);
-  opacity:.9;
-}
-
-.placeholder{
-  border:3px dashed rgba(0,0,0,.2);
-  border-radius:14px;
-  padding:18px;
-  background:rgba(255,255,255,.55);
-  font-size:1.05rem;
-  opacity:.85;
-}
-
-/* ===== GAME UI ===== */
-.topRow{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-bottom:10px;
-}
-
-.pill{
-  background:#fff;
-  border:3px solid var(--line);
-  border-radius:999px;
-  padding:8px 14px;
-  font-size:clamp(.95rem,1.8vw,1.1rem);
-}
-
-.instructions{
-  text-align:center;
-  font-size:clamp(1rem,2vw,1.2rem);
-  min-height:28px;
-  margin-bottom:10px;
-}
-
-.feedback{
-  text-align:center;
-  font-size:clamp(1rem,2vw,1.2rem);
-  min-height:30px;
-  margin-bottom:12px;
-}
-
-.feedback.good{
-  color:#1f7c42;
-}
-
-.feedback.bad{
-  color:#b53b3b;
-}
-
-.centerBox{
-  border:3px dashed var(--line);
-  border-radius:16px;
-  background:rgba(255,255,255,.55);
-  padding:14px;
-  text-align:center;
-  margin-bottom:14px;
-  font-size:clamp(1rem,2vw,1.15rem);
-}
-
-.choiceGrid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:14px;
-}
-
-.choiceBtn{
-  border:3px solid var(--line);
-  border-radius:18px;
-  background:var(--soft);
-  box-shadow:var(--shadow);
-  padding:12px;
-  cursor:pointer;
-  font-family:'Schoulschrëft', Arial, sans-serif;
-  color:var(--ink);
-}
-
-.choiceBtn:active{
-  transform:scale(.98);
-}
-
-.choiceBtn img{
-  width:100%;
-  max-width:220px;
-  max-height:150px;
-  object-fit:contain;
-  display:block;
-  margin:0 auto 8px auto;
-}
-
-.choiceLabel{
-  text-align:center;
-  font-size:clamp(1rem,2vw,1.2rem);
-}
-
-.good{
-  background:var(--good)!important;
-}
-
-.bad{
-  background:var(--bad)!important;
-}
-
-.memoryGrid{
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:12px;
-}
-
-.memoryCard{
-  min-height:120px;
-  border:3px solid var(--line);
-  border-radius:18px;
-  background:var(--soft);
-  box-shadow:var(--shadow);
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:8px;
-  font-family:'Schoulschrëft', Arial, sans-serif;
-  color:var(--ink);
-}
-
-.memoryCard:active{
-  transform:scale(.98);
-}
-
-.memoryCard img{
-  width:100%;
-  max-width:110px;
-  max-height:85px;
-  object-fit:contain;
-}
-
-.memoryBack{
-  font-size:2rem;
-}
-
-.doneBox{
-  border:3px dashed var(--line);
-  border-radius:16px;
-  background:rgba(255,255,255,.55);
-  padding:24px 16px;
-  text-align:center;
-  font-size:clamp(1.1rem,2.4vw,1.35rem);
-}
-
-@media (max-width:760px){
-  .choiceGrid{
-    grid-template-columns:1fr;
-  }
-
-  .memoryGrid{
-    grid-template-columns:repeat(3,minmax(0,1fr));
-  }
-}
-
-@media (max-width:520px){
-  .memoryGrid{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-  }
-}
-</style>
-</head>
-
-<body>
-
-<div class="topBar">
-  <button class="barBtn back" id="prev" aria-label="Virdrun">
-    <img src="https://i.postimg.cc/QBYTSN08/p3arrow.png" alt="">
-  </button>
-
-  <h1 class="barTitle" id="gameTitle">P3 – Lauschter a klick</h1>
-
-  <div class="barRight">
-    <button class="barBtn" id="play" aria-label="Play">
-      <img src="https://i.postimg.cc/ZB9yQkMt/p3play.png" alt="">
-    </button>
-    <button class="barBtn" id="replay" aria-label="Replay">
-      <img src="https://i.postimg.cc/ft30P4rQ/p3replay.png" alt="">
-    </button>
-    <button class="barBtn" id="next" aria-label="Nächst">
-      <img src="https://i.postimg.cc/QBYTSN08/p3arrow.png" alt="">
-    </button>
-  </div>
-</div>
-
-<div class="wrap">
-  <div class="card">
-    <div class="topRow">
-      <p class="cardTitle" id="cardTitle">Spill 1</p>
-      <div class="pill" id="gameCount">1 / 2</div>
-    </div>
-
-    <div class="instructions" id="instructions"></div>
-    <div class="feedback" id="feedback"></div>
-    <div id="gameArea"></div>
-  </div>
-</div>
-
-<script>
-const AUDIO_BASE = 'https://github.com/albrechtclaire1007/p3bauerenhaff/raw/refs/heads/main/';
-
-const ITEMS = [
-  { id:'bauer', word:'de Bauer', img:'https://i.postimg.cc/Z0dNtv6g/bauer.png', audio:'BAUER.mp3' },
-  { id:'gees', word:'d’Gees', img:'https://i.postimg.cc/PC7Nc6pp/gees.png', audio:'GEESS.mp3' },
-  { id:'fierkel', word:'d’Fierkel', img:'https://i.postimg.cc/FdjhGvJw/fiekel.png', audio:'FIERKEL.mp3' },
-  { id:'fillen', word:'de Fillen', img:'https://i.postimg.cc/5YwfpJCW/fillen.png', audio:'FILLEN.mp3' },
-  { id:'hong', word:'den Hong', img:'https://i.postimg.cc/R3nqzcwC/hong.png', audio:'HONG.mp3' },
-  { id:'iesel', word:'den Iesel', img:'https://i.postimg.cc/R3nqzcwx/iesel.png', audio:'IESEL.mp3' },
-  { id:'int', word:'d’Int', img:'https://i.postimg.cc/8FrsVhLP/int.png', audio:'INT.mp3' },
-  { id:'jippelchen', word:'d’Jippelchen', img:'https://i.postimg.cc/phbrVpBN/jippelchen.png', audio:'JIPPELCHEN.mp3' },
-  { id:'kallef', word:'d’Kallef', img:'https://i.postimg.cc/R65hCNTZ/kallef.png', audio:'KALLEF.mp3' },
-  { id:'kou', word:'d’Kou', img:'https://i.postimg.cc/Fd5zF7xR/kou.png', audio:'KOU.mp3' },
-  { id:'lammchen', word:'d’Lämmchen', img:'https://i.postimg.cc/zbZvDVkR/lammchen.png', audio:'LAMMCHEN.mp3' },
-  { id:'paerd', word:'d’Päerd', img:'https://i.postimg.cc/R67FW4Ps/paerd.png', audio:'PAERD.mp3' },
-  { id:'schof', word:'d’Schof', img:'https://i.postimg.cc/jwH5Dt89/schof.png', audio:'SCHOF.mp3' }
-];
-
-const GAME_TITLES = [
-  'P3 – Lauschter a klick',
-  'P3 – Memory'
-];
-
-const memoryBaseItems = [
-  ITEMS.find(x => x.id === 'bauer'),
-  ITEMS.find(x => x.id === 'kou'),
-  ITEMS.find(x => x.id === 'hong'),
-  ITEMS.find(x => x.id === 'int'),
-  ITEMS.find(x => x.id === 'paerd'),
-  ITEMS.find(x => x.id === 'schof')
-];
-
-const gameTitle = document.getElementById('gameTitle');
-const cardTitle = document.getElementById('cardTitle');
-const gameCount = document.getElementById('gameCount');
-const instructions = document.getElementById('instructions');
-const feedback = document.getElementById('feedback');
-const gameArea = document.getElementById('gameArea');
-const prevBtn = document.getElementById('prev');
-const nextBtn = document.getElementById('next');
-const playBtn = document.getElementById('play');
-
-let currentGame = 0;
-let audio = null;
-
-/* ===== GAME 1 STATE ===== */
-let listenOrder = [];
-let listenIndex = 0;
-let listenLocked = false;
-
-/* ===== GAME 2 STATE ===== */
-let memoryCards = [];
-let memoryFirst = null;
-let memorySecond = null;
-let memoryLocked = false;
-let memoryMatches = 0;
-
-function shuffle(arr){
-  const a = [...arr];
-  for(let i = a.length - 1; i > 0; i--){
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-function setFeedback(text, cls){
-  feedback.textContent = text || '';
-  feedback.className = 'feedback' + (cls ? ' ' + cls : '');
-}
-
-function stopAudio(){
-  if(audio){
-    audio.pause();
-    audio.currentTime = 0;
-  }
-}
-
-function playAudio(file){
-  stopAudio();
-  audio = new Audio(AUDIO_BASE + file);
-  audio.play().catch(()=>{});
-}
-
-function updateTopBar(){
-  gameTitle.textContent = GAME_TITLES[currentGame];
-  cardTitle.textContent = 'Spill ' + (currentGame + 1);
-  gameCount.textContent = (currentGame + 1) + ' / ' + GAME_TITLES.length;
-  prevBtn.style.opacity = currentGame === 0 ? '.45' : '1';
-  nextBtn.style.opacity = currentGame === GAME_TITLES.length - 1 ? '.45' : '1';
-  playBtn.style.opacity = currentGame === 0 ? '1' : '.45';
-}
-
-/* ===== GAME 1 ===== */
-function initListenGame(){
-  listenOrder = shuffle(ITEMS);
-  listenIndex = 0;
-  listenLocked = false;
-}
-
-function currentListenItem(){
-  return listenOrder[listenIndex];
-}
-
-function renderListenGame(){
-  const item = currentListenItem();
-
-  if(!item){
-    instructions.textContent = 'Bravo!';
-    setFeedback('Fäerdeg!', 'good');
-    gameArea.innerHTML = '<div class="doneBox">Du hues Spill 1 fäerdeg. Klick op de Pfeil no riets fir Spill 2.</div>';
-    return;
-  }
-
-  instructions.textContent = 'Lauschter a klick op dat richtegt Bild.';
-  setFeedback('', '');
-  listenLocked = false;
-
-  const choices = shuffle([
-    item,
-    ...shuffle(ITEMS.filter(x => x.id !== item.id)).slice(0, 3)
-  ]);
-
-  let html = '';
-  html += '<div class="centerBox">' + (listenIndex + 1) + ' / ' + listenOrder.length + '</div>';
-  html += '<div class="choiceGrid">';
-
-  choices.forEach(choice=>{
-    html += `
-      <button class="choiceBtn" data-id="${choice.id}">
-        <img src="${choice.img}" alt="${choice.word}">
-        <div class="choiceLabel">${choice.word}</div>
-      </button>
-    `;
-  });
-
-  html += '</div>';
-  gameArea.innerHTML = html;
-
-  const buttons = gameArea.querySelectorAll('.choiceBtn');
-
-  buttons.forEach(btn=>{
-    btn.onclick = function(){
-      if(listenLocked) return;
-
-      const pickedId = btn.getAttribute('data-id');
-
-      if(pickedId === item.id){
-        listenLocked = true;
-        btn.classList.add('good');
-        setFeedback('Richteg!', 'good');
-
-        setTimeout(function(){
-          listenIndex++;
-          renderListenGame();
-        }, 700);
-      }else{
-        btn.classList.add('bad');
-        setFeedback('Nach eng Kéier probéieren.', 'bad');
-
-        setTimeout(function(){
-          btn.classList.remove('bad');
-          setFeedback('', '');
-        }, 500);
-      }
-    };
-  });
-}
-
-/* ===== GAME 2 ===== */
-function initMemoryGame(){
-  const cards = [];
-
-  memoryBaseItems.forEach(item=>{
-    cards.push({
-      uid:'img-' + item.id,
-      pair:item.id,
-      type:'img',
-      value:item.img,
-      audio:item.audio,
-      open:false,
-      matched:false
-    });
-
-    cards.push({
-      uid:'word-' + item.id,
-      pair:item.id,
-      type:'word',
-      value:item.word,
-      audio:item.audio,
-      open:false,
-      matched:false
-    });
-  });
-
-  memoryCards = shuffle(cards);
-  memoryFirst = null;
-  memorySecond = null;
-  memoryLocked = false;
-  memoryMatches = 0;
-}
-
-function renderMemoryGame(){
-  if(memoryMatches === memoryBaseItems.length){
-    instructions.textContent = 'Bravo!';
-    setFeedback('Fäerdeg!', 'good');
-    gameArea.innerHTML = '<div class="doneBox">Du hues Spill 2 fäerdeg. Klick op ↻ fir nach eng Kéier ze spillen.</div>';
-    return;
-  }
-
-  instructions.textContent = 'Fann d’Puer: Bild + Wuert.';
-  setFeedback('', '');
-
-  let html = '';
-  html += '<div class="centerBox">' + memoryMatches + ' / ' + memoryBaseItems.length + '</div>';
-  html += '<div class="memoryGrid">';
-
-  memoryCards.forEach(card=>{
-    let inside = '<div class="memoryBack">?</div>';
-
-    if(card.open || card.matched){
-      if(card.type === 'img'){
-        inside = '<img src="' + card.value + '" alt="">';
-      }else{
-        inside = '<div>' + card.value + '</div>';
-      }
-    }
-
-    html += '<button class="memoryCard' + (card.matched ? ' good' : '') + '" data-uid="' + card.uid + '">' + inside + '</button>';
-  });
-
-  html += '</div>';
-  gameArea.innerHTML = html;
-
-  const buttons = gameArea.querySelectorAll('.memoryCard');
-
-  buttons.forEach(btn=>{
-    btn.onclick = function(){
-      if(memoryLocked) return;
-
-      const uid = btn.getAttribute('data-uid');
-      const card = memoryCards.find(c => c.uid === uid);
-
-      if(!card || card.open || card.matched) return;
-
-      card.open = true;
-
-      if(card.type === 'word'){
-        playAudio(card.audio);
-      }
-
-      if(memoryFirst === null){
-        memoryFirst = card;
-        renderMemoryGame();
-        return;
-      }
-
-      memorySecond = card;
-      memoryLocked = true;
-      renderMemoryGame();
-
-      if(memoryFirst.pair === memorySecond.pair){
-        setFeedback('Bravo!', 'good');
-
-        setTimeout(function(){
-          memoryFirst.matched = true;
-          memorySecond.matched = true;
-          memoryFirst = null;
-          memorySecond = null;
-          memoryLocked = false;
-          memoryMatches++;
-          renderMemoryGame();
-        }, 550);
-      }else{
-        setFeedback('Dat passt net.', 'bad');
-
-        setTimeout(function(){
-          memoryFirst.open = false;
-          memorySecond.open = false;
-          memoryFirst = null;
-          memorySecond = null;
-          memoryLocked = false;
-          renderMemoryGame();
-        }, 850);
-      }
-    };
-  });
-}
-
-/* ===== MAIN RENDER ===== */
-function renderCurrentGame(){
-  stopAudio();
-  updateTopBar();
-
-  if(currentGame === 0){
-    renderListenGame();
-  }else{
-    renderMemoryGame();
-  }
-}
-
-function replayCurrentGame(){
-  stopAudio();
-
-  if(currentGame === 0){
-    initListenGame();
-  }else{
-    initMemoryGame();
-  }
-
-  renderCurrentGame();
-}
-
-function playCurrentGameAudio(){
-  if(currentGame !== 0) return;
-
-  const item = currentListenItem();
-  if(item){
-    playAudio(item.audio);
-  }
-}
-
-/* ===== BUTTONS ===== */
-document.getElementById('prev').onclick = function(){
-  if(currentGame === 0) return;
-  currentGame--;
-  renderCurrentGame();
-};
-
-document.getElementById('next').onclick = function(){
-  if(currentGame === GAME_TITLES.length - 1) return;
-  currentGame++;
-  renderCurrentGame();
-};
-
-document.getElementById('play').onclick = function(){
-  playCurrentGameAudio();
-};
-
-document.getElementById('replay').onclick = function(){
-  replayCurrentGame();
-};
-
-/* ===== START ===== */
-initListenGame();
-initMemoryGame();
-renderCurrentGame();
-</script>
-
-</body>
-</html>
